@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Programación 1 Obligatorio 11/23</title>
+
+    <link rel="stylesheet" href="src/css/normalize.css">
+    <link rel="stylesheet" href="src/css/style.css">
+</head>
+
+<body>
+
+    <div class="contenedor">
+
+        <div id="cabezal" class="clearfix">
+
+            <div class="logo">
+                <a href="#">
+                    <img id="logo" src="src/img/logo4.svg" alt="Logo">
+                </a>
+
+            </div>
+
+            <nav>
+                <ul id="navPrincipal">
+                    <li>
+                        <a class="menus" seccion="Login">Login</a>
+                        <a class="menus" seccion="Registrarse">Registrarse</a>
+                    </li>
+                </ul> <!--? ul #navPrincipal -->
+            </nav> <!--? nav -->
+
+        </div> <!--? #cabezal -->
+
+        <header class="nombre-pagina">
+            <h1>Servicio Alquiler de Máquinas Virtuales</h1>
+        </header>
+
+        <main>
+            <div id="divLogin">
+
+                <h2 class="nombre-pagina">Login</h2>
+
+                <form action="#" class="formulario ">
+
+                    <fieldset>
+
+                        <div class="campo">
+                            <label for="nombreUsuario">Nombre de Usuario:</label>
+                            <input type="text" id="nombreUsuario" placeholder="Ingrese el nombre de usuario">
+                        </div> <!--? campo -->
+
+                        <div class="campo">
+                            <label for="password">Password:</label>
+                            <input type="text" id="password" placeholder="Ingrese su password">
+                        </div> <!--? campo -->
+
+                        <div>
+                            <input type="button" value="Iniciar Sesión" id="btnIniciarSesion">
+                        </div> <!--? button #btnIniciarSesion -->
+
+                        <div class="acciones">
+                            <a href="#">¿Aún no tienes una cuenta? Crea una</a>
+                        </div> <!--? acciones -->
+
+                    </fieldset>
+
+                </form> <!--? form login -->
+
+            </div> <!--? form login -->
+        </main> <!--? main login -->
+
+        <section>
+
+            <div id="divRegistrarse">
+                <h2 class="nombre-pagina">Registrarse</h2>
+
+                <form class="formulario">
+
+                    <fieldset>
+
+                        <div class="campo">
+                            <label for="nombre">Nombre:</label>
+                            <input type="text" id="nombre" placeholder="Ingrese su nombre">
+                        </div> <!--? campo -->
+
+                        <div class="campo">
+                            <label for="apellido">Apellido:</label>
+                            <input type="text" id="apellido" placeholder="Ingrese su apellido">
+                        </div> <!--? campo -->
+
+                        <div class="campo">
+                            <label for="nombreUsuario">Nombre de Usuario:</label>
+                            <input type="text" id="nombreUsuario" placeholder="Ingrese un nombre de usuario">
+                        </div> <!--? campo -->
+
+                        <div class="campo">
+                            <label for="password">Password:</label>
+                            <input type="text" id="password" placeholder="Ingrese un password">
+                        </div> <!--? campo -->
+
+                        <div class="campo">
+                            <label for="numeroTarjeta">Número Tarjeta de Crédito:</label>
+                            <input type="text" id="numeroTarjeta" placeholder="formato xxxx-xxxx-xxxx-xxxx">
+                        </div> <!--? campo -->
+
+                        <div class="campo">
+                            <label for="cvc">CVC (código de verificación):</label>
+                            <input type="text" id="cvc" placeholder="formato numérico de 3 dígitos">
+                        </div> <!--? campo -->
+
+                        <div>
+                            <input type="button" value="Registrarse" id="btnRegistrarse" class="boton">
+                        </div> <!--? button #btnRegistrarse -->
+
+                        <div class="acciones">
+                            <a href="/index.html">¿Ya tienes una cuenta? Inicia Sesión</a>
+                        </div> <!--? acciones -->
+
+                    </fieldset>
+
+                    <div class="resultado" id="resultado"></div> <!--? resultado -->
+            </div>
+
+        </section> <!--? section #registrarse -->
+
+        <hr>
+
+        <h3>Inputs</h3>
+        <label for="txtPrueba">Input largo</label>
+        <input type="text" id="txtPrueba" />
+        <label for="txtPruebaCorto">Input mitad</label>
+        <input type="text" class="inputMitad" id="txtPruebaCorto" />
+        <label for="txtComentarios">Text Area</label>
+        <textarea id="txtComentarios" class="textArea"></textarea>
+        <label for="slc">Select</label>
+        <select id="slc">
+            <option>opcion 1</option>
+            <option>opcion 2</option>
+            <option>opcion 3</option>
+        </select>
+        <input type="button" value="Submit" /><br />
+        <hr />
+        <!-- TABLA -->
+        <h3>Resumen</h3>
+        <table>
+            <thead class="heading">
+                <tr>
+                    <th> Alquiladas</th>
+                    <th> # Prendidas</th>
+                    <th> Estado </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        9
+                    </td>
+                    <td>30</td>
+                    <td>OFF</td>
+                    <td>
+                        <input type="button" value="Prender" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        9
+                    </td>
+                    <td>30</td>
+                    <td>OFF</td>
+                    <td>
+                        <input type="button" value="Prender" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        9
+                    </td>
+                    <td>30</td>
+                    <td>OFF</td>
+                    <td>
+                        <input type="button" value="Prender" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <hr />
+        <!-- CONTENT -->
+        <h1>2 columnas de elementos</h1>
+        <div class="articles2col">
+            <div class="subContent">
+                <h2>Contenido 1</h2>
+                <p>
+                    Donec dapibus arcu a diam commodo, vel vehicula orci volutpat.
+                    Vestibulum convallis tempor mattis. Donec molestie semper leo vel
+                    luctus. Curabitur quis nisi maximus, luctus lorem quis, dignissim
+                    augue.
+                </p>
+                <input type="button" value="Ejecutar acción" />
+            </div>
+            <hr />
+            <div class="subContent">
+                <h2>Contenido 2</h2>
+                <p>
+                    Donec dapibus arcu a diam commodo, vel vehicula orci volutpat.
+                    Vestibulum convallis tempor mattis. Donec molestie semper leo vel
+                    luctus. Curabitur quis nisi maximus, luctus lorem quis, dignissim
+                    augue.
+                </p>
+                <input type="button" value="Ejecutar acción" />
+            </div>
+        </div>
+        <hr>
+        <h1>1 columna de elementos</h1>
+        <div class="articles1col">
+            <div class="subContent">
+                <h2>Contenido 1</h2>
+                <p>
+                    Donec dapibus arcu a diam commodo, vel vehicula orci volutpat.
+                    Vestibulum convallis tempor mattis. Donec molestie semper leo vel
+                    luctus. Curabitur quis nisi maximus, luctus lorem quis, dignissim
+                    augue.
+                </p>
+                <input type="button" value="Ejecutar acción" />
+            </div>
+            <hr />
+            <div class="subContent">
+                <h2>Contenido 2</h2>
+                <p>
+                    Donec dapibus arcu a diam commodo, vel vehicula orci volutpat.
+                    Vestibulum convallis tempor mattis. Donec molestie semper leo vel
+                    luctus. Curabitur quis nisi maximus, luctus lorem quis, dignissim
+                    augue.
+                </p>
+                <input type="button" value="Ejecutar acción" />
+            </div>
+        </div> <!--FIN ELEMENTOS-->
+
+    </div> <!-- FIN CONTENIDO -->
+
+    <div id="footer">
+        <a href="https://github.com/kevinacuna0194/P1-Obligatorio11-2023"><b><u>Kevin Acuña Nº Estudiante 246410</u>
+                Todos los Derechos Reservados &copy;</b></a>
+    </div>
+    <!-- FIN PIE -->
+    </div>
+    <!-- FIN CONTENEDOR -->
+</body>
+
+<script src="classes/Sistema.js"></script>
+<script src="src/js/funciones.js"></script>
+<script src="classes/Object.js"></script>
+<script src="src/js/preCargaDatos.js"></script>
+<script src="src/js/app.js"></script>
+
+</html>
