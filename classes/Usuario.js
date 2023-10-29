@@ -1,6 +1,7 @@
 class Usuario {
 
     static UsuarioId = 0;
+    static logueado = null;
 
     constructor(nombre, apellido, nombreUsuario, password, numeroTarjeta, cvc) {
 
@@ -12,6 +13,7 @@ class Usuario {
         this.numeroTarjeta = numeroTarjeta ?? '';
         this.cvc = cvc ?? '';
         this.aprobado = false;
+        this.logueado = Usuario.logueado;
     }
 
     static validarNombre(nombre) {
@@ -118,6 +120,8 @@ class Usuario {
 
     static validarNombreUsuario(nombreUsuario) {
 
+        UI.limpiarHTML();
+
         /** Nombre de usuario: formato string alfanumérico, case insensitive. A modo de ejemplo: martin.luz01 */
         if (nombreUsuario.length < 0 || nombreUsuario === '') {
 
@@ -165,6 +169,8 @@ class Usuario {
     }
 
     static validarPassword(password) {
+
+        UI.limpiarHTML();
 
         /** Contraseña: La contraseña deberá ser un string con un mínimo de 5 caracteres, contando con al menos una 
         mayúscula, una minúscula y un número. */
@@ -240,5 +246,10 @@ class Usuario {
         }
 
         return true;
+    }
+
+    validarUsuario(nombre, apellido, nombreUsuario, password, numeroTarjeta, cvc) {
+
+        return Usuario.validarNombreUsuario(nombreUsuario) && Usuario.validarPassword(password);
     }
 }

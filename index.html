@@ -26,8 +26,10 @@
             <nav>
                 <ul id="navPrincipal">
                     <li>
-                        <a class="menus" seccion="Login">Login</a>
-                        <a class="menus" seccion="Registrarse">Registrarse</a>
+                        <a class="enlaceNavegacion" data-id="Login">Login</a>
+                    </li>
+                    <li>
+                        <a class="enlaceNavegacion" data-id="Registrarse">Registrarse</a>
                     </li>
                 </ul> <!--? ul #navPrincipal -->
             </nav> <!--? nav -->
@@ -45,16 +47,19 @@
 
                 <form action="#" class="formulario ">
 
+                    <div class="resultado" id="resultado"></div> <!--? resultado -->
+
                     <fieldset>
 
                         <div class="campo">
                             <label for="nombreUsuario">Nombre de Usuario:</label>
-                            <input type="text" id="nombreUsuario" placeholder="Ingrese el nombre de usuario">
+                            <input type="text" id="nombreUsuario" placeholder="Ingrese el nombre de usuario"
+                                value="kevin">
                         </div> <!--? campo -->
 
                         <div class="campo">
                             <label for="password">Password:</label>
-                            <input type="text" id="password" placeholder="Ingrese su password">
+                            <input type="text" id="password" placeholder="Ingrese su password" value="Kevin01">
                         </div> <!--? campo -->
 
                         <div>
@@ -62,7 +67,12 @@
                         </div> <!--? button #btnIniciarSesion -->
 
                         <div class="acciones">
-                            <a href="#">¿Aún no tienes una cuenta? Crea una</a>
+                            <ul>
+                                <li>
+                                    <a class="enlaceNavegacion" data-id="Registrarse">¿No tienes una cuenta?
+                                        Registrate</a>
+                                </li>
+                            </ul>
                         </div> <!--? acciones -->
 
                     </fieldset>
@@ -74,7 +84,8 @@
 
         <section>
 
-            <div id="divRegistrarse">
+            <div id="divRegistrarse" class="usuario">
+
                 <h2 class="nombre-pagina">Registrarse</h2>
 
                 <form class="formulario">
@@ -116,7 +127,7 @@
                         </div> <!--? button #btnRegistrarse -->
 
                         <div class="acciones">
-                            <a href="/index.html">¿Ya tienes una cuenta? Inicia Sesión</a>
+                            <a href="/">¿Ya tienes una cuenta? Inicia Sesión</a>
                         </div> <!--? acciones -->
 
                     </fieldset>
@@ -126,133 +137,15 @@
 
         </section> <!--? section #registrarse -->
 
-        <hr>
-
-        <h3>Inputs</h3>
-        <label for="txtPrueba">Input largo</label>
-        <input type="text" id="txtPrueba" />
-        <label for="txtPruebaCorto">Input mitad</label>
-        <input type="text" class="inputMitad" id="txtPruebaCorto" />
-        <label for="txtComentarios">Text Area</label>
-        <textarea id="txtComentarios" class="textArea"></textarea>
-        <label for="slc">Select</label>
-        <select id="slc">
-            <option>opcion 1</option>
-            <option>opcion 2</option>
-            <option>opcion 3</option>
-        </select>
-        <input type="button" value="Submit" /><br />
-        <hr />
-        <!-- TABLA -->
-        <h3>Resumen</h3>
-        <table>
-            <thead class="heading">
-                <tr>
-                    <th> Alquiladas</th>
-                    <th> # Prendidas</th>
-                    <th> Estado </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>
-                        9
-                    </td>
-                    <td>30</td>
-                    <td>OFF</td>
-                    <td>
-                        <input type="button" value="Prender" />
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        9
-                    </td>
-                    <td>30</td>
-                    <td>OFF</td>
-                    <td>
-                        <input type="button" value="Prender" />
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        9
-                    </td>
-                    <td>30</td>
-                    <td>OFF</td>
-                    <td>
-                        <input type="button" value="Prender" />
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <hr />
-        <!-- CONTENT -->
-        <h1>2 columnas de elementos</h1>
-        <div class="articles2col">
-            <div class="subContent">
-                <h2>Contenido 1</h2>
-                <p>
-                    Donec dapibus arcu a diam commodo, vel vehicula orci volutpat.
-                    Vestibulum convallis tempor mattis. Donec molestie semper leo vel
-                    luctus. Curabitur quis nisi maximus, luctus lorem quis, dignissim
-                    augue.
-                </p>
-                <input type="button" value="Ejecutar acción" />
-            </div>
-            <hr />
-            <div class="subContent">
-                <h2>Contenido 2</h2>
-                <p>
-                    Donec dapibus arcu a diam commodo, vel vehicula orci volutpat.
-                    Vestibulum convallis tempor mattis. Donec molestie semper leo vel
-                    luctus. Curabitur quis nisi maximus, luctus lorem quis, dignissim
-                    augue.
-                </p>
-                <input type="button" value="Ejecutar acción" />
-            </div>
-        </div>
-        <hr>
-        <h1>1 columna de elementos</h1>
-        <div class="articles1col">
-            <div class="subContent">
-                <h2>Contenido 1</h2>
-                <p>
-                    Donec dapibus arcu a diam commodo, vel vehicula orci volutpat.
-                    Vestibulum convallis tempor mattis. Donec molestie semper leo vel
-                    luctus. Curabitur quis nisi maximus, luctus lorem quis, dignissim
-                    augue.
-                </p>
-                <input type="button" value="Ejecutar acción" />
-            </div>
-            <hr />
-            <div class="subContent">
-                <h2>Contenido 2</h2>
-                <p>
-                    Donec dapibus arcu a diam commodo, vel vehicula orci volutpat.
-                    Vestibulum convallis tempor mattis. Donec molestie semper leo vel
-                    luctus. Curabitur quis nisi maximus, luctus lorem quis, dignissim
-                    augue.
-                </p>
-                <input type="button" value="Ejecutar acción" />
-            </div>
-        </div> <!--FIN ELEMENTOS-->
-
-    </div> <!-- FIN CONTENIDO -->
-
-    <div id="footer">
-        <a href="https://github.com/kevinacuna0194/P1-Obligatorio11-2023"><b><u>Kevin Acuña Nº Estudiante 246410</u>
-                Todos los Derechos Reservados &copy;</b></a>
-    </div>
-    <!-- FIN PIE -->
-    </div>
-    <!-- FIN CONTENEDOR -->
+    </div> <!-- .contenedor -->
 </body>
 
 <script src="classes/Sistema.js"></script>
+<script src="classes/UI.js"></script>
+<script src="classes/Usuario.js"></script>
+<script src="classes/Administrador.js"></script>
 <script src="src/js/funciones.js"></script>
-<script src="classes/Object.js"></script>
-<script src="src/js/preCargaDatos.js"></script>
+<script src="src/js/preCargarDatos.js"></script>
 <script src="src/js/app.js"></script>
 
 </html>
