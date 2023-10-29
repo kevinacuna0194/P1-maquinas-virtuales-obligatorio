@@ -3,7 +3,7 @@
 /** variables */
 const btnIniciarSesion = document.querySelector('#btnIniciarSesion');
 const btnRegistrarse = document.querySelector('#btnRegistrarse');
-const resultado = document.querySelector('#resultado');
+const resultado = document.querySelector('form #resultado');
 
 /** Iniciar Aplicación */
 obligatorio();
@@ -25,30 +25,84 @@ function iniciarObligatorio() {
 
 /** Instancias */
 const sistema = new Sistema();
+const usuario = new Usuario();
 preCargarDatosUsuario();
+console.log(sistema);
 
 /** Funciones */
 function login() {
 
-    const nombreUsuario = document.querySelector('#nombreUsuario').value.trim();
-    const password = document.querySelector('#password').value.trim();
+    const nombreUsuario = document.querySelector('#nombreUsuarioLogin').value.trim();
+    const password = document.querySelector('#passwordLogin').value.trim();
 
-    if (Usuario.validarNombreUsuario(nombreUsuario) && Usuario.validarPassword(password)) {
+    if (usuario.validarNombreUsuario(nombreUsuario, 'resultadoLogin')) {
 
-        if (sistema.login(nombreUsuario, password)) {
+        if (usuario.validarPassword(password, 'resultadoLogin')) {
 
-            mostrarSecciones('usuario');
-            document.querySelector("#divLogin").style.display = "none";
+            if (sistema.login(nombreUsuario, password)) {
 
-        } else {
+                mostrarSecciones('usuario');
+                document.querySelector("#divLogin").style.display = "none";
 
-            UI.imprimirAlerta('Nombre de Uusario o Contraseña incorrectos', 'error');
+            } else {
+
+                UI.imprimirAlerta('Nombre de Usario o Contraseña incorrectos', 'error', 'resultadoLogin');
+            }
         }
     }
 }
 
 function registrarse() {
 
-    console.log('Desde el formulario Regitrarse');
-} 
+    const nombre = document.querySelector('#nombre').value.trim();
+    const apellido = document.querySelector('#apellido').value.trim();
+    const nombreUsuario = document.querySelector('#nombreUsuario').value.trim().toLowerCase();
+    const password = document.querySelector('#password').value.trim();
+    let numeroTarjeta = document.querySelector('#numeroTarjeta').value;
+    let cvc = document.querySelector('#cvc').value.trim();
+
+    if (usuario.validarNombre(nombre, 'resultadoFormReg')) {
+
+        if (usuario.validarApellido(apellido, 'resultadoFormReg')) {
+
+            if (usuario.validarNombreUsuario(nombreUsuario, 'resultadoFormReg')) {
+
+                if (usuario.validarPassword(password, 'resultadoFormReg')) {
+
+                    if (sistema.validarNumeroTarjeta(numeroTarjeta, 'resultadoFormReg')) {
+
+                        numeroTarjeta = Number(numeroTarjeta);
+
+                        if (sistema.validarCvc(cvc, 'resultadoFormReg')) {
+
+                            cvc = Number(cvc);
+
+                            if (sistema.agregarUsuario(nombre, apellido, nombreUsuario, password, numeroTarjeta, cvc)) {
+
+                                UI.imprimirAlerta('Usuario Agregado Correctamente', 'exito', 'resultadoFormReg');
+
+                                document.querySelector('#formReg').reset();
+
+                                setTimeout(() => {
+
+                                    ocultarTodo();
+                                    document.querySelector('#divLogin').style.display = 'block';
+
+                                }, 3000);
+
+
+                            } else {
+
+                                UI.imprimirAlerta('Error al registrar el usuario', 'error', 'resultadoFormReg');
+                            }
+
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    console.log(sistema);
+}
 

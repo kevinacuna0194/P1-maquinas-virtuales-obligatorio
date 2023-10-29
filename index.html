@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Programación 1 Obligatorio 11/23</title>
+    <title>P1-Obligatorio11-23</title>
+    <link rel="icon" href="src/img/logo4.ico" type="image/x-icon">
 
     <link rel="stylesheet" href="src/css/normalize.css">
     <link rel="stylesheet" href="src/css/style.css">
@@ -15,9 +16,8 @@
     <div class="contenedor">
 
         <div id="cabezal" class="clearfix">
-
             <div class="logo">
-                <a href="#">
+                <a href="/">
                     <img id="logo" src="src/img/logo4.svg" alt="Logo">
                 </a>
 
@@ -33,12 +33,19 @@
                     </li>
                 </ul> <!--? ul #navPrincipal -->
             </nav> <!--? nav -->
-
         </div> <!--? #cabezal -->
 
         <header class="nombre-pagina">
-            <h1>Servicio Alquiler de Máquinas Virtuales</h1>
+            <h1>Alquiler de Máquinas Virtuales</h1>
+
+            <p class="descripcion-pagina"><span>Obtener temporalmente la capacidad de cómputo necesaria para correr
+                    modelos
+                    de
+                    IA.
+                </span></p>
         </header>
+
+        <hr>
 
         <main>
             <div id="divLogin">
@@ -47,19 +54,19 @@
 
                 <form action="#" class="formulario ">
 
-                    <div class="resultado" id="resultado"></div> <!--? resultado -->
+                    <div class="resultado" id="resultadoLogin"></div> <!--? resultado -->
 
                     <fieldset>
 
                         <div class="campo">
-                            <label for="nombreUsuario">Nombre de Usuario:</label>
-                            <input type="text" id="nombreUsuario" placeholder="Ingrese el nombre de usuario"
+                            <label for="nombreUsuarioLogin">Nombre de Usuario:</label>
+                            <input type="text" id="nombreUsuarioLogin" placeholder="Ingrese el nombre de usuario"
                                 value="kevin">
                         </div> <!--? campo -->
 
                         <div class="campo">
-                            <label for="password">Password:</label>
-                            <input type="text" id="password" placeholder="Ingrese su password" value="Kevin01">
+                            <label for="passwordLogin">Password:</label>
+                            <input type="text" id="passwordLogin" placeholder="Ingrese su password" value="Kevin01">
                         </div> <!--? campo -->
 
                         <div>
@@ -88,38 +95,42 @@
 
                 <h2 class="nombre-pagina">Registrarse</h2>
 
-                <form class="formulario">
+                <form class="formulario" id="formReg">
+
+                    <div class="resultado" id="resultadoFormReg" data-id="resultadoRegistro"></div> <!--? resultado -->
 
                     <fieldset>
 
                         <div class="campo">
                             <label for="nombre">Nombre:</label>
-                            <input type="text" id="nombre" placeholder="Ingrese su nombre">
+                            <input type="text" id="nombre" placeholder="Ingrese su nombre" value="Usuario">
                         </div> <!--? campo -->
 
                         <div class="campo">
                             <label for="apellido">Apellido:</label>
-                            <input type="text" id="apellido" placeholder="Ingrese su apellido">
+                            <input type="text" id="apellido" placeholder="Ingrese su apellido" value="Usuario">
                         </div> <!--? campo -->
 
                         <div class="campo">
                             <label for="nombreUsuario">Nombre de Usuario:</label>
-                            <input type="text" id="nombreUsuario" placeholder="Ingrese un nombre de usuario">
+                            <input type="text" id="nombreUsuario" placeholder="Ingrese un nombre de usuario"
+                                value="usuario">
                         </div> <!--? campo -->
 
                         <div class="campo">
                             <label for="password">Password:</label>
-                            <input type="text" id="password" placeholder="Ingrese un password">
+                            <input type="text" id="password" placeholder="Ingrese un password" value="Usuario1">
                         </div> <!--? campo -->
 
                         <div class="campo">
                             <label for="numeroTarjeta">Número Tarjeta de Crédito:</label>
-                            <input type="text" id="numeroTarjeta" placeholder="formato xxxx-xxxx-xxxx-xxxx">
+                            <input type="text" id="numeroTarjeta" placeholder="formato xxxx-xxxx-xxxx-xxxx"
+                                value="5158459996466345">
                         </div> <!--? campo -->
 
                         <div class="campo">
                             <label for="cvc">CVC (código de verificación):</label>
-                            <input type="text" id="cvc" placeholder="formato numérico de 3 dígitos">
+                            <input type="text" id="cvc" placeholder="formato numérico de 3 dígitos" value="223">
                         </div> <!--? campo -->
 
                         <div>
@@ -127,12 +138,14 @@
                         </div> <!--? button #btnRegistrarse -->
 
                         <div class="acciones">
-                            <a href="/">¿Ya tienes una cuenta? Inicia Sesión</a>
+                            <ul>
+                                <li>
+                                    <a class="enlaceNavegacion" data-id="Login">¿Ya tienes una cuenta? Inicia Sesión</a>
+                                </li>
+                            </ul>
                         </div> <!--? acciones -->
 
                     </fieldset>
-
-                    <div class="resultado" id="resultado"></div> <!--? resultado -->
             </div>
 
         </section> <!--? section #registrarse -->

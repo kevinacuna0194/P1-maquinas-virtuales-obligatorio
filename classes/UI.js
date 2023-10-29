@@ -1,6 +1,6 @@
 class UI extends Sistema {
 
-    static imprimirAlerta(mensaje, tipo) {
+    static imprimirAlerta(mensaje, tipo, idDiv) {
 
         const parrafo = document.createElement('P');
         parrafo.classList.add('alerta');
@@ -11,18 +11,24 @@ class UI extends Sistema {
         } else {
             parrafo.classList.add('exito');
         }
-
-        resultado.appendChild(parrafo);
-
+        
+        document.querySelector(`#${idDiv}`).appendChild(parrafo);
+        
         setTimeout(() => {
             parrafo.remove();
         }, 3000);
     }
 
     static limpiarHTML() {
+        
+        const nodeList = document.querySelectorAll('.resultado');
 
-        while (resultado.firstChild) {
-            resultado.removeChild(resultado.firstChild);
+        for(let div of nodeList) {
+
+            while (div.firstChild) {
+                div.removeChild(div.firstChild);
+            }
         }
+
     }
 }

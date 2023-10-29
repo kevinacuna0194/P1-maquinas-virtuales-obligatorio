@@ -3,15 +3,16 @@ class Sistema {
     constructor() {
 
         this.usuarios = new Array();
+        this.logueado = null;
     }
 
-    validarNumeroTarjeta(numeroTarjeta) {
+    validarNumeroTarjeta(numeroTarjeta, idDiv) {
 
         UI.limpiarHTML();
 
         if (numeroTarjeta.length < 0 || numeroTarjeta === '') {
 
-            UI.imprimirAlerta('El Número de tarjeta es obligatorio', 'error');
+            UI.imprimirAlerta('El Número de tarjeta es obligatorio', 'error', idDiv);
             return false;
         }
 
@@ -44,24 +45,24 @@ class Sistema {
 
         if (caracter) {
 
-            UI.imprimirAlerta('El Número de Tarjeta solo puede tener valores numéricos', 'error');
+            UI.imprimirAlerta('El Número de Tarjeta solo puede tener valores numéricos', 'error', idDiv);
             return false;
 
         } else if (espacio || cantidadEspacio > 0) {
 
-            UI.imprimirAlerta('El Número de Tarjeta no puede contener espacios', 'error');
+            UI.imprimirAlerta('El Número de Tarjeta no puede contener espacios', 'error', idDiv);
             return false;
 
         } else if (numero < 16 || numeroTarjeta.length < 16) {
 
-            UI.imprimirAlerta('El Número de Tarjeta debe tener 16 dígitos', 'error');
+            UI.imprimirAlerta('El Número de Tarjeta debe tener 16 dígitos', 'error', idDiv);
             return false;
         }
 
         let valido = this.algoritmoLuhn(numeroTarjeta);
 
         if (!valido) {
-            UI.imprimirAlerta(`El número de tarjeta: <u>${numeroTarjeta}</u> No es válido.`, 'error');
+            UI.imprimirAlerta(`El número de tarjeta: <u>${numeroTarjeta}</u> No es válido.`, 'error', idDiv);
             return false;
         }
 
@@ -143,31 +144,31 @@ class Sistema {
         return validacionFinal;
     }
 
-    validarCvc(cvc) {
+    validarCvc(cvc, idDiv) {
 
         UI.limpiarHTML();
 
         if (cvc.length < 0 || cvc === '') {
 
-            UI.imprimirAlerta('El CVC es obligatorio', 'error');
+            UI.imprimirAlerta('El CVC es obligatorio', 'error', idDiv);
             return false;
         }
 
         if (sistema.espcio(cvc)) {
 
-            UI.imprimirAlerta('El CVC no puede tener espacios', 'error');
+            UI.imprimirAlerta('El CVC no puede tener espacios', 'error', idDiv);
             return false;
         }
 
         if (sistema.CantidadNumeros(cvc, 'CVC') !== 3) {
 
-            UI.imprimirAlerta('El CVC debe tener 3 números', 'error');
+            UI.imprimirAlerta('El CVC debe tener 3 números', 'error', idDiv);
             return false;
         }
 
         if (sistema.caracteres(cvc)) {
 
-            UI.imprimirAlerta('El CVC solo puede tener números', 'error');
+            UI.imprimirAlerta('El CVC solo puede tener números', 'error', idDiv);
             return false;
         }
 
@@ -223,8 +224,6 @@ class Sistema {
             let letra = tipoDeDato.charAt(index);
             let code = tipoDeDato.charCodeAt(index);
 
-            console.log(letra, code);
-
             if (code < 48 || code > 57) {
                 caracter = true;
             }
@@ -235,14 +234,20 @@ class Sistema {
         return caracter;
     } /** si contiene caracteres que no son números retorna true */
 
-    agregarUsuario(nombre, apellido, nombreUsuario, password, numeroTarjeta, cvc, aprobado, logueado) {
+    agregarUsuario(nombre, apellido, nombreUsuario, password, numeroTarjeta, cvc) {
 
         let agregado = false;
-        let usuario = new Usuario();
 
         if (usuario.validarUsuario(nombre, apellido, nombreUsuario, password, numeroTarjeta, cvc)) {
+
+            let usuario = new Usuario();
             
-            usuario = { nombre, apellido, nombreUsuario, password, numeroTarjeta, cvc, aprobado, logueado };
+            usuario.nombre = nombre;
+            usuario.apellido = apellido;
+            usuario.nombreUsuario = nombreUsuario;
+            usuario.password = password;
+            usuario.numeroTarjeta = numeroTarjeta;
+            usuario.cvc = cvc;
                         
             // Agregar al arreglo de usuarios
             this.usuarios.push(usuario);
@@ -257,7 +262,7 @@ class Sistema {
 
         let encontrado = false;
 
-        let usuario = this.obtenerUsuario(nombreUsuario); /** retorna objeto de usuario encontrado */
+        let usuario = this.obtenerUsuario(nombreUsuario); /** retorna objeto de usuario encontrado sino default null */
 
         if (usuario !== null) {
 
@@ -286,7 +291,7 @@ class Sistema {
 
             index++;
         }
-
+        
         return existe; /** Objeto de usuario encontrado */
     }
 }

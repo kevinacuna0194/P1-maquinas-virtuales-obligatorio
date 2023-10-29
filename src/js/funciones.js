@@ -27,7 +27,7 @@ function mostrarSeccion() {
         return;
     }
 
-    if (Usuario.logueado !== null) {
+    if (sistema.logueado !== null) {
         // limpiarInformacionAnterior();
 
         document.querySelector(`#div${seccion}`).style.display = 'block';

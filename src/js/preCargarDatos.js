@@ -9,11 +9,11 @@ function preCargarDatosUsuario() {
     const aprobado = false;
     const logueado = true;
 
-    sistema.agregarUsuario(nombre, apellido, nombreUsuario, password, numeroTarjeta, cvc, aprobado, logueado); /** Retorna true si se agrega correctamente */
+    sistema.agregarUsuario(nombre, apellido, nombreUsuario, password, numeroTarjeta, cvc, aprobado); /** Retorna true si se agrega correctamente */
 
-    if(sistema.agregarUsuario) {
+    if(sistema.agregarUsuario) { /** retorna true o false */
         
-        UI.imprimirAlerta(`Usuario Agregado Correctamente: ${nombreUsuario}`, 'exito');
+        // UI.imprimirAlerta(`Usuario Agregado Correctamente: ${nombreUsuario}`, 'exito');
 
     } else {
 

@@ -1,11 +1,10 @@
 class Usuario {
 
-    static UsuarioId = 0;
-    static logueado = null;
+    static usuarioId = 0;
 
     constructor(nombre, apellido, nombreUsuario, password, numeroTarjeta, cvc) {
 
-        this.id = Usuario.UsuarioId++;
+        this.id = Usuario.usuarioId++;
         this.nombre = nombre ?? '';
         this.apellido = apellido ?? '';
         this.nombreUsuario = nombreUsuario ?? '';
@@ -13,26 +12,25 @@ class Usuario {
         this.numeroTarjeta = numeroTarjeta ?? '';
         this.cvc = cvc ?? '';
         this.aprobado = false;
-        this.logueado = Usuario.logueado;
     }
 
-    static validarNombre(nombre) {
+    validarNombre(nombre, idDiv) {
 
         UI.limpiarHTML();
 
         if (nombre.length < 0 || nombre === '') {
 
-            UI.imprimirAlerta('El Nombre es Obligatorio', 'error');
+            UI.imprimirAlerta('El Nombre es Obligatorio', 'error', idDiv);
             return false;
 
         } else if (nombre.charAt(0) !== nombre.charAt(0).toUpperCase()) {
 
-            UI.imprimirAlerta('El nombre debe comenzar con mayúscula', 'error');
+            UI.imprimirAlerta('El nombre debe comenzar con mayúscula', 'error', idDiv);
             return false;
 
         } else if (nombre.length < 3 || nombre.length > 15) {
 
-            UI.imprimirAlerta('El Nombre no debe tener entre 3 y 15 caracteres', 'error');
+            UI.imprimirAlerta('El Nombre no debe tener entre 3 y 15 caracteres', 'error', idDiv);
             return false;
         }
 
@@ -56,35 +54,35 @@ class Usuario {
 
         if (espacio) {
 
-            UI.imprimirAlerta('El nombre no puede tener espacios', 'error');
+            UI.imprimirAlerta('El nombre no puede tener espacios', 'error', idDiv);
             return false;
 
         } else if (numero) {
 
-            UI.imprimirAlerta('El nombre no puede tener números', 'error');
+            UI.imprimirAlerta('El nombre no puede tener números', 'error', idDiv);
             return false;
         }
 
         return true;
     }
 
-    static validarApellido(apellido) {
+    validarApellido(apellido, idDiv) {
 
         UI.limpiarHTML();
 
         if (apellido.length < 0 || apellido === '') {
 
-            UI.imprimirAlerta('El Apellido es Obligatorio', 'error');
+            UI.imprimirAlerta('El Apellido es Obligatorio', 'error', idDiv);
             return false;
 
         } else if (apellido.charAt(0) !== apellido.charAt(0).toUpperCase()) {
 
-            UI.imprimirAlerta('El apellido debe comenzar con mayúscula', 'error');
+            UI.imprimirAlerta('El apellido debe comenzar con mayúscula', 'error', idDiv);
             return false;
 
         } else if (apellido.length < 3 || apellido.length > 10) {
 
-            UI.imprimirAlerta('El Apellido debe tener entre 3 y 15 caracteres', 'error');
+            UI.imprimirAlerta('El Apellido debe tener entre 3 y 15 caracteres', 'error', idDiv);
         }
 
         let espacio = false;
@@ -106,31 +104,31 @@ class Usuario {
 
         if (espacio) {
 
-            UI.imprimirAlerta('El Apellido no puede tener espacios', 'error');
+            UI.imprimirAlerta('El Apellido no puede tener espacios', 'error', idDiv);
             return false;
 
         } else if (numero) {
 
-            UI.imprimirAlerta('El Apellido no puede tener números', 'error');
+            UI.imprimirAlerta('El Apellido no puede tener números', 'error', idDiv);
             return false;
         }
 
         return true;
     }
 
-    static validarNombreUsuario(nombreUsuario) {
+    validarNombreUsuario(nombreUsuario, idDiv) {
 
         UI.limpiarHTML();
 
         /** Nombre de usuario: formato string alfanumérico, case insensitive. A modo de ejemplo: martin.luz01 */
         if (nombreUsuario.length < 0 || nombreUsuario === '') {
 
-            UI.imprimirAlerta('El Nombre de usuario es obligatorio', 'error');
+            UI.imprimirAlerta('El Nombre de usuario es obligatorio', 'error', idDiv);
             return false;
 
         } else if (nombreUsuario.length < 3 && nombreUsuario.length > 15) {
 
-            UI.imprimirAlerta('El nombre de usuario debe tener entre 3 y 15 caracteres', 'error');
+            UI.imprimirAlerta('El nombre de usuario debe tener entre 3 y 15 caracteres', 'error', idDiv);
         }
 
         let index = 0;
@@ -154,13 +152,13 @@ class Usuario {
 
         if (espacio) {
 
-            UI.imprimirAlerta('El Nombre de Usuario no puede tener espacios', 'error');
+            UI.imprimirAlerta('El Nombre de Usuario no puede tener espacios', 'error', idDiv);
             return false;
         }
 
         if (numero > 2 && Number(numero) > 0) {
 
-            UI.imprimirAlerta('El nombre de usuario solo puede tener 2 números positivos', 'error');
+            UI.imprimirAlerta('El nombre de usuario solo puede tener 2 números positivos', 'error', idDiv);
             return false;
 
         }
@@ -168,7 +166,7 @@ class Usuario {
         return true;
     }
 
-    static validarPassword(password) {
+    validarPassword(password, idDiv) {
 
         UI.limpiarHTML();
 
@@ -177,12 +175,12 @@ class Usuario {
 
         if (password.length < 0 || password === '') {
 
-            UI.imprimirAlerta('El Password es obligatorio', 'error');
+            UI.imprimirAlerta('El Password es obligatorio', 'error', idDiv);
             return false;
 
         } else if (password.length < 5 || password.length > 15) {
 
-            UI.imprimirAlerta('El Password debe tener entre 5 y 15 caracteres', 'error');
+            UI.imprimirAlerta('El Password debe tener entre 5 y 15 caracteres', 'error', idDiv);
             return false;
         }
 
@@ -225,22 +223,22 @@ class Usuario {
 
         if (mayuscula === 0) {
 
-            UI.imprimirAlerta('El Password debe tener al menos una mayúscula', 'error');
+            UI.imprimirAlerta('El Password debe tener al menos una mayúscula', 'error', idDiv);
             return false;
 
         } else if (minuscula === 0) {
 
-            UI.imprimirAlerta('El Password debe tener al menos una minúscula', 'error');
+            UI.imprimirAlerta('El Password debe tener al menos una minúscula', 'error', idDiv);
             return false;
 
         } else if (espacio) {
 
-            UI.imprimirAlerta('El Password no puede tener espacios', 'error');
+            UI.imprimirAlerta('El Password no puede tener espacios', 'error', idDiv);
             return false;
 
         } else if (Number(numero) <= 0) {
 
-            UI.imprimirAlerta('El Password debe tener al menos 1 números', 'error');
+            UI.imprimirAlerta('El Password debe tener al menos 1 números', 'error', idDiv);
             return false;
 
         }
@@ -250,6 +248,12 @@ class Usuario {
 
     validarUsuario(nombre, apellido, nombreUsuario, password, numeroTarjeta, cvc) {
 
-        return Usuario.validarNombreUsuario(nombreUsuario) && Usuario.validarPassword(password);
+        return usuario.validarNombreUsuario(nombreUsuario) && usuario.validarPassword(password);
     }
+
+    validarRegistro(nombre, apellido, nombreUsuario, password, numeroTarjeta, cvc) {
+        return usuario.validarNombre(nombre) && usuario.validarApellido(apellido) && usuario.validarNombreUsuario(nombreUsuario) && usuario.validarPassword(password) && sistema.validarNumeroTarjeta(numeroTarjeta) && sistema.validarCvc(cvc);
+
+    }
+
 }
