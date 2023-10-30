@@ -31,6 +31,9 @@
                     <li>
                         <a class="enlaceNavegacion" data-id="Registrarse">Registrarse</a>
                     </li>
+                    <li>
+                        <a class="enlaceNavegacion" data-id="AlquilerMaquina">Alquiler Máquina Virtual</a>
+                    </li>
                 </ul> <!--? ul #navPrincipal -->
             </nav> <!--? nav -->
         </div> <!--? #cabezal -->
@@ -47,116 +50,140 @@
 
         <hr>
 
-        <main>
-            <div id="divLogin">
+        <div id="divLogin">
 
-                <h2 class="nombre-pagina">Login</h2>
+            <h2 class="nombre-pagina">Login</h2>
 
-                <form action="#" class="formulario ">
+            <form action="#" class="formulario ">
 
-                    <div class="resultado" id="resultadoLogin"></div> <!--? resultado -->
+                <div class="resultado" id="resultadoLogin"></div> <!--? resultado -->
 
-                    <fieldset>
+                <fieldset>
 
-                        <div class="campo">
-                            <label for="nombreUsuarioLogin">Nombre de Usuario:</label>
-                            <input type="text" id="nombreUsuarioLogin" placeholder="Ingrese el nombre de usuario"
-                                value="kevin">
-                        </div> <!--? campo -->
+                    <div class="campo">
+                        <label for="nombreUsuarioLogin">Nombre de Usuario:</label>
+                        <input type="text" id="nombreUsuarioLogin" placeholder="Ingrese el nombre de usuario"
+                            value="kevin">
+                    </div> <!--? campo -->
 
-                        <div class="campo">
-                            <label for="passwordLogin">Password:</label>
-                            <input type="text" id="passwordLogin" placeholder="Ingrese su password" value="Kevin01">
-                        </div> <!--? campo -->
+                    <div class="campo">
+                        <label for="passwordLogin">Password:</label>
+                        <input type="text" id="passwordLogin" placeholder="Ingrese su password" value="Kevin01">
+                    </div> <!--? campo -->
 
-                        <div>
-                            <input type="button" value="Iniciar Sesión" id="btnIniciarSesion">
-                        </div> <!--? button #btnIniciarSesion -->
+                    <div>
+                        <input type="button" value="Iniciar Sesión" id="btnIniciarSesion">
+                    </div> <!--? button #btnIniciarSesion -->
 
-                        <div class="acciones">
-                            <ul>
-                                <li>
-                                    <a class="enlaceNavegacion" data-id="Registrarse">¿No tienes una cuenta?
-                                        Registrate</a>
-                                </li>
-                            </ul>
-                        </div> <!--? acciones -->
+                    <div class="acciones">
+                        <ul>
+                            <li>
+                                <a class="enlaceNavegacion" data-id="Registrarse">¿No tienes una cuenta?
+                                    Registrate</a>
+                            </li>
+                        </ul>
+                    </div> <!--? acciones -->
 
-                    </fieldset>
+                </fieldset>
 
-                </form> <!--? form login -->
+            </form> <!--? form login -->
 
-            </div> <!--? form login -->
-        </main> <!--? main login -->
+        </div> <!--? form login -->
 
-        <section>
+        <div id="divRegistrarse">
 
-            <div id="divRegistrarse" class="usuario">
+            <h2 class="nombre-pagina">Registrarse</h2>
 
-                <h2 class="nombre-pagina">Registrarse</h2>
+            <form class="formulario" id="formReg">
 
-                <form class="formulario" id="formReg">
+                <div class="resultado" id="resultadoFormReg" data-id="resultadoRegistro"></div> <!--? resultado -->
 
-                    <div class="resultado" id="resultadoFormReg" data-id="resultadoRegistro"></div> <!--? resultado -->
+                <fieldset>
 
-                    <fieldset>
+                    <div class="campo">
+                        <label for="nombre">Nombre:</label>
+                        <input type="text" id="nombre" placeholder="Ingrese su nombre" value="Usuario">
+                    </div> <!--? campo -->
 
-                        <div class="campo">
-                            <label for="nombre">Nombre:</label>
-                            <input type="text" id="nombre" placeholder="Ingrese su nombre" value="Usuario">
-                        </div> <!--? campo -->
+                    <div class="campo">
+                        <label for="apellido">Apellido:</label>
+                        <input type="text" id="apellido" placeholder="Ingrese su apellido" value="Usuario">
+                    </div> <!--? campo -->
 
-                        <div class="campo">
-                            <label for="apellido">Apellido:</label>
-                            <input type="text" id="apellido" placeholder="Ingrese su apellido" value="Usuario">
-                        </div> <!--? campo -->
+                    <div class="campo">
+                        <label for="nombreUsuario">Nombre de Usuario:</label>
+                        <input type="text" id="nombreUsuario" placeholder="Ingrese un nombre de usuario"
+                            value="usuario">
+                    </div> <!--? campo -->
 
-                        <div class="campo">
-                            <label for="nombreUsuario">Nombre de Usuario:</label>
-                            <input type="text" id="nombreUsuario" placeholder="Ingrese un nombre de usuario"
-                                value="usuario">
-                        </div> <!--? campo -->
+                    <div class="campo">
+                        <label for="password">Password:</label>
+                        <input type="text" id="password" placeholder="Ingrese un password" value="Usuario1">
+                    </div> <!--? campo -->
 
-                        <div class="campo">
-                            <label for="password">Password:</label>
-                            <input type="text" id="password" placeholder="Ingrese un password" value="Usuario1">
-                        </div> <!--? campo -->
+                    <div class="campo">
+                        <label for="numeroTarjeta">Número Tarjeta de Crédito:</label>
+                        <input type="text" id="numeroTarjeta" placeholder="formato xxxx-xxxx-xxxx-xxxx"
+                            value="5158459996466345">
+                    </div> <!--? campo -->
 
-                        <div class="campo">
-                            <label for="numeroTarjeta">Número Tarjeta de Crédito:</label>
-                            <input type="text" id="numeroTarjeta" placeholder="formato xxxx-xxxx-xxxx-xxxx"
-                                value="5158459996466345">
-                        </div> <!--? campo -->
+                    <div class="campo">
+                        <label for="cvc">CVC (código de verificación):</label>
+                        <input type="text" id="cvc" placeholder="formato numérico de 3 dígitos" value="223">
+                    </div> <!--? campo -->
 
-                        <div class="campo">
-                            <label for="cvc">CVC (código de verificación):</label>
-                            <input type="text" id="cvc" placeholder="formato numérico de 3 dígitos" value="223">
-                        </div> <!--? campo -->
+                    <div>
+                        <input type="button" value="Registrarse" id="btnRegistrarse" class="boton">
+                    </div> <!--? button #btnRegistrarse -->
 
-                        <div>
-                            <input type="button" value="Registrarse" id="btnRegistrarse" class="boton">
-                        </div> <!--? button #btnRegistrarse -->
+                    <div class="acciones">
+                        <ul>
+                            <li>
+                                <a class="enlaceNavegacion" data-id="Login">¿Ya tienes una cuenta? Inicia Sesión</a>
+                            </li>
+                        </ul>
+                    </div> <!--? acciones -->
 
-                        <div class="acciones">
-                            <ul>
-                                <li>
-                                    <a class="enlaceNavegacion" data-id="Login">¿Ya tienes una cuenta? Inicia Sesión</a>
-                                </li>
-                            </ul>
-                        </div> <!--? acciones -->
+                </fieldset>
 
-                    </fieldset>
-            </div>
+            </form>
 
-        </section> <!--? section #registrarse -->
+        </div> <!--? #divRegistrarse -->
 
-    </div> <!-- .contenedor -->
+        <div id="divAlquilerMaquina" class="usuario">
+
+            <h2 class="nombre-pagina">Alquiler de una máquina virtual</h2>
+
+            <form action="/" class="formulario">
+
+                <div class="resultado" id="resultadoFormMaquina"></div> <!--? resultado -->
+
+                <fieldset>
+
+                    <legend>Seleccionar Instancia</legend>
+
+                    <div class="campo" id="selectMaquina"></div>
+
+                    <input type="button" value="Alquilar" id="btnAlquilar">
+
+                </fieldset>
+            </form>
+
+        </div> <!--? #divAlquilerMaquina -->
+
+        <!-- <footer>
+            <a href="https://github.com/kevinacuna0194/P1-Obligatorio11-2023.git"><p class="descripcion-pagina">Kevin Acuña Nº Estudiante 246410. Todos los derechos reservados &copy;</p></a>
+        </footer> -->
+
+    </div> <!--? .contenedor -->
+
 </body>
 
 <script src="classes/Sistema.js"></script>
 <script src="classes/UI.js"></script>
 <script src="classes/Usuario.js"></script>
 <script src="classes/Administrador.js"></script>
+<script src="classes/Maquina.js"></script>
 <script src="src/js/funciones.js"></script>
 <script src="src/js/preCargarDatos.js"></script>
 <script src="src/js/app.js"></script>

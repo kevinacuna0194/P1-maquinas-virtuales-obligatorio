@@ -1,6 +1,7 @@
 function ocultarTodo() {
-    divLogin.style.display = 'none';
-    divRegistrarse.style.display = 'none';
+    document.querySelector('#divLogin').style.display = 'none';
+    document.querySelector('#divRegistrarse').style.display = 'none';
+    document.querySelector('#divAlquilerMaquina').style.display = 'none';
 }
 
 function cargarNavegacion() {

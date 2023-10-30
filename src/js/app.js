@@ -3,6 +3,7 @@
 /** variables */
 const btnIniciarSesion = document.querySelector('#btnIniciarSesion');
 const btnRegistrarse = document.querySelector('#btnRegistrarse');
+const btnAlquilar = document.querySelector('#btnAlquilar');
 const resultado = document.querySelector('form #resultado');
 
 /** Iniciar Aplicación */
@@ -11,6 +12,7 @@ function obligatorio() {
     document.addEventListener('DOMContentLoaded', eventListeners => {
         btnIniciarSesion.addEventListener('click', login);
         btnRegistrarse.addEventListener('click', registrarse);
+        btnAlquilar.addEventListener('click', alquilar);
     });
 }
 
@@ -26,8 +28,11 @@ function iniciarObligatorio() {
 /** Instancias */
 const sistema = new Sistema();
 const usuario = new Usuario();
+const maquina = new Maquina();
+
+/** Pre Cargar Datos */
 preCargarDatosUsuario();
-console.log(sistema);
+preCargarDatosMaquina();
 
 /** Funciones */
 function login() {
@@ -41,8 +46,19 @@ function login() {
 
             if (sistema.login(nombreUsuario, password)) {
 
-                mostrarSecciones('usuario');
-                document.querySelector("#divLogin").style.display = "none";
+                UI.imprimirAlerta('Iniciando Sesión...', 'exito', 'resultadoLogin');
+
+                setTimeout(() => {
+
+                    mostrarSecciones('usuario');
+
+                    document.querySelector("#divLogin").style.display = "none";
+
+                    sistema.selectMaquina();
+
+                }, 1000);
+
+
 
             } else {
 
@@ -102,7 +118,15 @@ function registrarse() {
             }
         }
     }
+}
 
-    console.log(sistema);
+function alquilar() {
+
+    const machine = Number(document.querySelector('#selectMaquina #maquina').value);
+
+    if (maquina.validarMaquina(machine)) {
+
+        maquina.alquilar(machine);
+    }
 }
 

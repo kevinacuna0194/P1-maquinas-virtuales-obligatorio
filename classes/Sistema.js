@@ -3,6 +3,8 @@ class Sistema {
     constructor() {
 
         this.usuarios = new Array();
+        this.maquinas = new Array();
+        this.maquinasAlquiladas = new Array();
         this.logueado = null;
     }
 
@@ -293,5 +295,33 @@ class Sistema {
         }
         
         return existe; /** Objeto de usuario encontrado */
+    }
+
+    agregarMaquina(object) {
+
+        const { nombre, tipo, costoAlquiler, costoEncendido } = object;
+
+        let maquina = new Maquina(nombre, tipo, costoAlquiler, costoEncendido);
+
+        this.maquinas.push(maquina);
+    }
+
+    selectMaquina() {
+
+        let select = `
+        <select id="maquina">
+            <option value="">--Seleccione--</option>
+        `;
+
+        for(let maquina of this.maquinas) {
+
+            const { id, nombre, tipo, costoAlquiler, costoEncendido } = maquina;
+
+            select += `<option value="${id}">Nombre: ${nombre} Tipo: ${tipo} Costo: ${costoAlquiler} Costo Encendido: ${costoEncendido}</option>`;
+        }
+
+        select += `</select>`;
+
+        document.querySelector('#selectMaquina').innerHTML = select;
     }
 }
