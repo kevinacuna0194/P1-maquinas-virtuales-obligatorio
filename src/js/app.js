@@ -51,14 +51,16 @@ function login() {
                 setTimeout(() => {
 
                     mostrarSecciones('usuario');
-
+                    /** Ocultar Login */
                     document.querySelector("#divLogin").style.display = "none";
 
                     sistema.selectMaquina();
 
+                    sistema.tablaMaquinas();
+
+                    sistema.prender();
+
                 }, 1000);
-
-
 
             } else {
 
@@ -106,7 +108,6 @@ function registrarse() {
 
                                 }, 3000);
 
-
                             } else {
 
                                 UI.imprimirAlerta('Error al registrar el usuario', 'error', 'resultadoFormReg');
@@ -127,7 +128,7 @@ function alquilar() {
 
     if (maquina.validarMaquina(machine)) {
 
-        maquina.alquilar(machine);
+        sistema.alquilar(machine);
     }
 
 }

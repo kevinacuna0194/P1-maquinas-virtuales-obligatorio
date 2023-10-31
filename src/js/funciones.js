@@ -2,6 +2,7 @@ function ocultarTodo() {
     document.querySelector('#divLogin').style.display = 'none';
     document.querySelector('#divRegistrarse').style.display = 'none';
     document.querySelector('#divAlquilerMaquina').style.display = 'none';
+    document.querySelector('#divListadoMaquinas').style.display = 'none';
 }
 
 function cargarNavegacion() {

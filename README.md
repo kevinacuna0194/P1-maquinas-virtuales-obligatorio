@@ -1,11 +1,14 @@
 # Obligatorio Programación 1 :bookmark_tabs:
 ~~~
-ORT - Analista en Tecnologías de la Información
+Objetivo:
+La inteligencia artificial (IA) generativa ha tomado un rol cada vez más grande en nuestra generación gracias a su posible 
+aplicación en diversas áreas y diversidad de propósitos. 
+Estos avances presentan varios desafíos, entre ellos la capacidad de procesamiento requerida para la generación de 
+contenido es una limitante para algunas pequeñas empresas, startups o proyectos personales que quieren introducirse en 
+el área. 
 Para ayudar a resolver esta problemática, una empresa decidió desarrollar un servicio de alquiler de máquinas virtuales 
 (instancias) en la nube, que permite obtener temporalmente la capacidad de cómputo necesaria para correr modelos de 
 IA.
-Se desea desarrollar una pequeña parte de este servicio que permita la administración de estas máquinas, así como 
-también el alquiler de las mismas por parte de los usuarios. 
 ~~~
 ---
 <p align="center" font-weight="bold">

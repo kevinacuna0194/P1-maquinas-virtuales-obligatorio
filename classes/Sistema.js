@@ -243,14 +243,14 @@ class Sistema {
         if (usuario.validarUsuario(nombre, apellido, nombreUsuario, password, numeroTarjeta, cvc)) {
 
             let usuario = new Usuario();
-            
+
             usuario.nombre = nombre;
             usuario.apellido = apellido;
             usuario.nombreUsuario = nombreUsuario;
             usuario.password = password;
             usuario.numeroTarjeta = numeroTarjeta;
             usuario.cvc = cvc;
-                        
+
             // Agregar al arreglo de usuarios
             this.usuarios.push(usuario);
 
@@ -274,7 +274,7 @@ class Sistema {
                 this.logueado = usuario;
             }
         }
-        
+
         return encontrado;
     }
 
@@ -282,7 +282,7 @@ class Sistema {
 
         let existe = null;
         let index = 0;
-        
+
         while (existe === null && index < this.usuarios.length) {
 
             let usuario = this.usuarios[index];
@@ -293,7 +293,7 @@ class Sistema {
 
             index++;
         }
-        
+
         return existe; /** Objeto de usuario encontrado */
     }
 
@@ -313,7 +313,7 @@ class Sistema {
             <option value="">--Seleccione--</option>
         `;
 
-        for(let maquina of this.maquinas) {
+        for (let maquina of this.maquinas) {
 
             const { id, nombre, tipo, costoAlquiler, costoEncendido, stock } = maquina;
 
@@ -323,5 +323,147 @@ class Sistema {
         select += `</select>`;
 
         document.querySelector('#selectMaquina').innerHTML = select;
+    }
+
+    tablaMaquinas() {
+
+        if (sistema.maquinasAlquiladas.length > 0) {
+
+            let tabla =
+                `<table>
+                <thead class="heading">
+                    <tr>
+                        <th>Tipo de Instancia</th>
+                        <th>Estado</th>
+                        <th>Veces Iniciada</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>`;
+
+            this.maquinasAlquiladas.forEach(maquina => {
+
+                const { tipo, estado, iniciada, id } = maquina;
+
+                tabla +=
+                    `<tr>
+                    <td>${tipo}</td>
+                    <td>${estado}</td>
+                    <td>${iniciada}</td>
+                    <td><input type="button" value="Prender" id="btnPrender" data-id="${id}"></td>
+                </tr>`
+            });
+
+            tabla +=
+                `</body>
+            </table>`
+
+            document.querySelector('#tablaMaquinas').innerHTML = tabla;
+
+        }
+    }
+
+    alquilar(id) {
+
+        let alquilada = null;
+        let posicion = 0;
+        let index = 0;
+
+        while (index < sistema.maquinas.length) {
+
+            let maquina = sistema.maquinas[index];
+
+            if (id === maquina.id) {
+
+                posicion = index
+                alquilada = maquina;
+            }
+
+            index++;
+        }
+
+        if (alquilada !== null) {
+
+            let { nombre, stock } = alquilada;
+
+            if (stock > 0) {
+
+                let disminuirStock = stock - 1;
+
+                alquilada.stock = disminuirStock;
+
+                // sistema.maquinasAlquiladas.push(alquilada);
+                this.maquinasAlquiladas = [...this.maquinasAlquiladas, alquilada];
+
+                this.tablaMaquinas();
+
+                this.prender()
+
+                UI.limpiarHTML();
+                UI.imprimirAlerta(`Instancia Alquilada: <b><u>${nombre}</u></b>`, 'exito', 'resultadoFormMaquina');
+
+            } else {
+                // this.maquinas.splice(posicion, 1);
+                UI.imprimirAlerta(`Sin Stock: <b><u>${nombre}</u></b>`, 'error', 'resultadoFormMaquina');
+            }
+
+            this.selectMaquina();
+        }
+    }
+
+    prender() {
+
+        if (this.maquinasAlquiladas.length > 0) {
+
+            if (this.maquinasAlquiladas.length === 1) {
+
+                let btnPrender = document.querySelector('#btnPrender');
+
+                btnPrender.addEventListener('click', this.turnOnUnRegistro);
+
+            } else {
+
+                let btnPrender = document.querySelectorAll('#btnPrender');
+
+                for (let boton of btnPrender) {
+
+                    boton.addEventListener('click', this.turnOn);
+                }
+            }
+        }
+    }
+
+    turnOnUnRegistro(e) {
+
+        const id = Number(e.target.attributes[3].value) /** ID del imput button de la tabla maquinas alquiladas */
+
+        sistema.maquinasAlquiladas.forEach(maquina => {
+
+            if (id === maquina.id) {
+
+                const sumarInicio = maquina.iniciada + 1;
+                maquina.iniciada = sumarInicio;
+
+                console.log(maquina);
+            }
+
+        });
+    }
+
+    turnOn(e) {
+
+        const id = Number(e.target.attributes[3].value) /** ID del imput button de la tabla maquinas alquiladas */
+
+        sistema.maquinasAlquiladas.forEach(maquina => {
+
+            if (id === maquina.id) {
+
+                const sumarInicio = maquina.iniciada + 1;
+                maquina.iniciada = sumarInicio;
+
+                console.log(maquina);
+            }
+
+        });
     }
 }

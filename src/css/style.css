@@ -151,6 +151,7 @@ section {
     text-align: center;
     margin: 5rem 0;
     font-weight: var(bold);
+    text-transform: capitalize;
 }
 
 .nombre-pagina span {
@@ -243,7 +244,7 @@ section {
 
 .formulario fieldset {
     padding-top: calc(var(--separacion) / 3);
-    margin-bottom: 10rem;
+    margin-bottom: 5rem;
     border: none;
     border: 1px solid var(--gris);
     border-radius: 1rem;
@@ -335,10 +336,12 @@ th,
 td {
     border-collapse: collapse;
     border: none;
-    padding-left: 15px;
+    /* padding-left: 15px;
     padding-bottom: 5px;
-    padding-top: 5px;
+    padding-top: 5px; */
+    padding: 1.5rem;
     background-color: #fafafa;
+    text-align: center;
 }
 
 .heading {
@@ -519,4 +522,21 @@ input[type="button"]:disabled {
     font-size: 14px;
     font-weight: 600;
     text-decoration: none;
+}
+
+#tablaMaquinas {
+    display: flex;
+    justify-content: center;
+}
+
+table {
+    padding: calc(var(--separacion) / 3);
+    margin-bottom: 5rem;
+    border: none;
+    border: 1px solid var(--gris);
+    border-radius: 1rem;
+
+    @media(min-width: 758px) {
+        width: 60rem;
+    }
 }
