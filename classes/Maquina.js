@@ -2,7 +2,7 @@ class Maquina {
 
     static idMaquina = 0;
 
-    constructor(nombre, tipo, costo, costoEncendido) {
+    constructor(nombre, tipo, costo, costoEncendido, stock) {
 
         this.id = Maquina.idMaquina++;
         this.nombre = nombre ?? '';
@@ -10,11 +10,12 @@ class Maquina {
         this.costoAlquiler = costo;
         this.costoEncendido = costoEncendido;
         this.estado = 'on';
+        this.stock = stock
     }
 
     validarMaquina(id) {
 
-        if (id.length < 0 || id === '') {
+        if (id === 0) {
 
             UI.imprimirAlerta('Seleccione alguna opción', 'error', 'resultadoFormMaquina');
             return;
@@ -44,15 +45,25 @@ class Maquina {
 
         if (alquilada !== null) {
 
-            sistema.maquinasAlquiladas.push(alquilada);
+            if (alquilada.stock > 0) {
 
-            sistema.maquinas.splice(posicion, 1);
+                const disminuirStock = alquilada.stock - 1;
 
-            UI.imprimirAlerta(`Maquina Alquilada: <b><u>${alquilada.nombre}</u></b>`, 'exito', 'resultadoFormMaquina');
+                alquilada.stock = disminuirStock;
+
+                // sistema.maquinasAlquiladas.push(alquilada);
+                sistema.maquinasAlquiladas = [...sistema.maquinasAlquiladas, alquilada];
+
+                UI.imprimirAlerta(`Instancia Alquilada: <b><u>${alquilada.nombre}</u></b>`, 'exito', 'resultadoFormMaquina');
+
+            } else {
+                // sistema.maquinas.splice(posicion, 1);
+                UI.imprimirAlerta(`Sin Stock: <b><u>${alquilada.nombre}</u></b>`, 'error', 'resultadoFormMaquina');
+            }
 
             sistema.selectMaquina();
         }
 
-        
+        return sistema.maquinasAlquiladas;
     }
 }

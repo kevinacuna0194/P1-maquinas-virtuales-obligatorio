@@ -168,11 +168,14 @@ section {
 }
 
 #navPrincipal {
-    float: right;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    /* float: right;
     flex-wrap: wrap;
     margin-top: 5px;
     margin-right: 10px;
-    max-width: 400px;
+    max-width: 400px; */
 }
 
 #navPrincipal li {

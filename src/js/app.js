@@ -122,11 +122,17 @@ function registrarse() {
 
 function alquilar() {
 
+    const select = document.querySelector('#selectMaquina #maquina');
     const machine = Number(document.querySelector('#selectMaquina #maquina').value);
 
     if (maquina.validarMaquina(machine)) {
 
         maquina.alquilar(machine);
     }
+
 }
+
+console.log(sistema);
+
+
 

@@ -299,9 +299,9 @@ class Sistema {
 
     agregarMaquina(object) {
 
-        const { nombre, tipo, costoAlquiler, costoEncendido } = object;
+        const { nombre, tipo, costoAlquiler, costoEncendido, stock } = object;
 
-        let maquina = new Maquina(nombre, tipo, costoAlquiler, costoEncendido);
+        let maquina = new Maquina(nombre, tipo, costoAlquiler, costoEncendido, stock);
 
         this.maquinas.push(maquina);
     }
@@ -315,9 +315,9 @@ class Sistema {
 
         for(let maquina of this.maquinas) {
 
-            const { id, nombre, tipo, costoAlquiler, costoEncendido } = maquina;
+            const { id, nombre, tipo, costoAlquiler, costoEncendido, stock } = maquina;
 
-            select += `<option value="${id}">Nombre: ${nombre} Tipo: ${tipo} Costo: ${costoAlquiler} Costo Encendido: ${costoEncendido}</option>`;
+            select += `<option value="${id}">Nombre: ${nombre} Tipo: ${tipo} Costo: ${costoAlquiler} Costo Encendido: ${costoEncendido} Stock: ${stock}</option>`;
         }
 
         select += `</select>`;
