@@ -306,11 +306,41 @@ class Sistema {
         this.maquinas.push(maquina);
     }
 
+    maquina(idMaquina) {
+
+        let machine = null;
+
+        for(let maquina of sistema.maquinas) {
+
+            if (maquina.idMaquina === idMaquina) {
+
+                machine = maquina;
+            }
+        }
+
+        return machine;
+    }
+
+    maquinaAlquilada(idAlquiler) {
+
+        let maquinaAlquilada = null;
+
+        for(let maquina of sistema.maquinasAlquiladas) {
+
+            if (maquina.idAlquiler === idAlquiler) {
+
+                maquinaAlquilada = maquina;
+            }
+        }
+
+        return maquinaAlquilada;
+    }
+
     alquilar(id) {
 
         UI.limpiarHTML();
 
-        let alquilada = null;
+        let maquinaAlquilada = null;
         let posicion = 0;
         let index = 0;
 
@@ -321,27 +351,31 @@ class Sistema {
             if (id === maquina.idMaquina) {
 
                 posicion = index
-                alquilada = maquina;
+                maquinaAlquilada = maquina;
             }
 
             index++;
         }
 
-        if (alquilada !== null) {
+        if (maquinaAlquilada !== null) {
 
-            let { idMaquina, nombre, tipo, estado, stock, iniciada } = alquilada;
-            const idUsuario = sistema.logueado.id;
+            let { idMaquina, nombre, tipo, costoAlquiler, costoEncendido, estado, stock, iniciada } = maquinaAlquilada;
+
+            const idUsuario = this.logueado.id;
 
             if (stock > 0) {
 
-                let disminuirStock = stock - 1;
-                alquilada.stock = disminuirStock;
+                /** Restar stock y actualizar propiedad */
+                let stockReal = stock - 1;
+                maquinaAlquilada.stock = stockReal;
 
-                const alquiler = new Alquiler(idUsuario, idMaquina, nombre, tipo, estado, iniciada);
+                /**Instanciar objeto Alquiler. Pasar datos al constructor */
+                const alquiler = new Alquiler(idUsuario, idMaquina, nombre, tipo, estado, iniciada, costoAlquiler, costoEncendido, stockReal);
 
                 // this.maquinasAlquiladas = [...this.maquinasAlquiladas, alquilada];
-                sistema.maquinasAlquiladas.push(alquiler);
+                this.maquinasAlquiladas.push(alquiler);
 
+                /** Actualizar tabla **/
                 this.tablaMaquinas();
 
                 UI.imprimirAlerta(`Instancia Alquilada: <b><u>${nombre}</u></b>`, 'exito', 'resultadoFormMaquina');
@@ -382,6 +416,7 @@ class Sistema {
                 `<table>
                 <thead class="heading">
                     <tr>
+                        <th>Nombre</th>
                         <th>Tipo de Instancia</th>
                         <th>Estado</th>
                         <th>Veces Iniciada</th>
@@ -394,100 +429,79 @@ class Sistema {
 
                 let maquina = this.maquinasAlquiladas[index];
 
-                const { idAlquiler, idMaquina, tipo, estado, iniciada } = maquina;
+                const { idAlquiler, idMaquina, nombre, tipo, estado, iniciada } = maquina;
 
                 tabla +=
                     `<tr>
-                    <td>${tipo}</td>
-                    <td>${estado}</td>
-                    <td>${iniciada}</td>
-                    <td><input type="button" value="Apagar" id="btnApagar" data-id="${idMaquina}" data-alquiler="${idAlquiler}"></td>
-                    <td><input type="button" value="Prender" id="btnPrender" data-id="${idMaquina}" data-alquiler="${idAlquiler}" disabled></td>
-                </tr>`
+                        <td>${nombre}</td>
+                        <td>${tipo}</td>
+                        <td><b>${estado}</b></td>
+                        <td><b>${iniciada}</b></td>
+                        <td><input type="button" value="ON / OFF" id="btnApagarPrender" data-alquiler="${idAlquiler}"></td>
+                    </tr>`
             }
 
             tabla +=
                 `</body>
-            </table>`
+                </table>`
 
             document.querySelector('#tablaMaquinas').innerHTML = tabla;
 
-            this.apagar(); /** Permitir funcionalidad al boton apagar */
-
-
-
+            /** Permitir funcionalidad al boton apagar */
+            this.accionesTabla();
         }
     }
 
-    apagar() {
+    accionesTabla() {
 
         if (this.maquinasAlquiladas.length !== 0) {
 
-            let btnApagar = document.querySelectorAll('#btnApagar');
+            let btnApagarPrender = document.querySelectorAll(`#btnApagarPrender`);
 
-            for (let boton of btnApagar) {
+            for (let boton of btnApagarPrender) {
 
-                boton.addEventListener('click', this.turnOff)
+                boton.addEventListener('click', this.cambiarEstado)
             }
+
+        }
+
+    }
+
+    cambiarEstado() {
+
+        const idAlquilerBoton = Number(this.getAttribute("data-alquiler"));
+
+        const maquinaAlquilada = sistema.maquinaAlquilada(idAlquilerBoton);
+
+        if (maquinaAlquilada !== null) {
+
+            const nuevoEstado = sistema.estadoMaquina(maquinaAlquilada);
+
+            maquinaAlquilada.estado = nuevoEstado;
+
+            if (maquinaAlquilada.estado === 'ON') {
+
+                const iniciada = maquinaAlquilada.iniciada + 1;
+                maquinaAlquilada.iniciada = iniciada;
+            }
+
+            sistema.tablaMaquinas();
         }
     }
 
-    turnOff(e) {
+    estadoMaquina(maquinaAlquilada) {
 
-        // const id = e.target.dataset.id;
-        // const id = e.target.attributes[3].value;
-        const idMaquina = Number(this.getAttribute("data-id"));
-        const idAlquiler = Number(this.getAttribute("data-alquiler"));
-
-        console.log('ID Alquiler', idAlquiler);
-
-        let index = 0;
-
-        while (index < sistema.maquinasAlquiladas.length) {
-
-            let maquina = sistema.maquinasAlquiladas[index];
-
-            if (idAlquiler === maquina.idAlquiler && idMaquina === maquina.idMaquina) {
-
-                maquina.estado = 'OFF';
-                document.querySelector('')
-                sistema.tablaMaquinas();
-            }
-
-            index++;
+        let estado = '';
+    
+        if (maquinaAlquilada.estado === 'ON') {
+            estado = 'OFF'
         }
-    }
-
-    prender() {
-
-        if (this.maquinasAlquiladas.length > 0) {
-
-            let btnPrender = document.querySelectorAll('#btnPrender');
-
-            for (let boton of btnPrender) {
-
-                boton.addEventListener('click', this.turnOn);
-            }
+    
+        if (maquinaAlquilada.estado === 'OFF') {
+            estado = 'ON'
+    
         }
+    
+        return estado;
     }
-
-    // turnOn(e) {
-
-    //     console.log(e.target);
-
-    //     // const id = this.getAttribute("data-id");
-    //     // const id = e.target.attributes[3].value;
-    //     const id = Number(e.target.dataset.id);
-
-    //     console.log(id);
-
-    //     sistema.maquinasAlquiladas.forEach(maquina => {
-
-    //         if (id === maquina.id && maquina.estado === 'OFF') {
-
-    //             maquina.estado = 'ON';
-    //             sistema.tablaMaquinas();
-    //         }
-    //     });
-    // }
 }

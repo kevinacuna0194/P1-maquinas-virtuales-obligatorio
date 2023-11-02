@@ -131,8 +131,6 @@ function alquilar() {
 
         sistema.alquilar(machine);
     }
-
-    
 }
 
 
