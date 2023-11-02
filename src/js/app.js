@@ -1,5 +1,3 @@
-"use strict";
-
 /** variables */
 const btnIniciarSesion = document.querySelector('#btnIniciarSesion');
 const btnRegistrarse = document.querySelector('#btnRegistrarse');
@@ -30,6 +28,8 @@ const sistema = new Sistema();
 const usuario = new Usuario();
 const maquina = new Maquina();
 
+console.log(sistema);
+
 /** Pre Cargar Datos */
 preCargarDatosUsuario();
 preCargarDatosMaquina();
@@ -50,6 +50,9 @@ function login() {
 
                 setTimeout(() => {
 
+                    UI.limpiarBienvenida();
+                    bienvenido();
+
                     mostrarSecciones('usuario');
                     /** Ocultar Login */
                     document.querySelector("#divLogin").style.display = "none";
@@ -57,8 +60,7 @@ function login() {
                     sistema.selectMaquina();
 
                     sistema.tablaMaquinas();
-
-                    sistema.prender();
+                    // sistema.prender();
 
                 }, 1000);
 
@@ -123,7 +125,6 @@ function registrarse() {
 
 function alquilar() {
 
-    const select = document.querySelector('#selectMaquina #maquina');
     const machine = Number(document.querySelector('#selectMaquina #maquina').value);
 
     if (maquina.validarMaquina(machine)) {
@@ -131,9 +132,8 @@ function alquilar() {
         sistema.alquilar(machine);
     }
 
+    
 }
-
-console.log(sistema);
 
 
 

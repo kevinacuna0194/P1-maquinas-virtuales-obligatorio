@@ -540,3 +540,14 @@ table {
         width: 60rem;
     }
 }
+
+div #bienvenido {
+    display: flex;
+    justify-content: end;
+    margin-right: 5rem;
+}
+
+div #bienvenido .spanBienvenido {
+    font-weight: var(--bold);
+    color: var(--azulOscuro);
+}

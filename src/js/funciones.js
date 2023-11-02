@@ -48,3 +48,13 @@ function mostrarSecciones(clase) {
         div.style.display = 'block';
     }
 }
+
+function bienvenido() {
+
+    const { nombre, apellido, id } = sistema.logueado;
+
+    const p = document.createElement('P');
+    p.innerHTML = `<span class="spanBienvenido">Bienvenido:</span> ${nombre} ${apellido} <span class="spanBienvenido">ID:</span> ${id}`;
+
+    document.querySelector('#bienvenido').appendChild(p);
+}

@@ -72,7 +72,7 @@ function preCargarDatosMaquina() {
 
     const maquinaAlmacenamiento1 = {
         nombre: 'i7.medium',
-        tipo: 'Optimizadas para almacenamiento:',
+        tipo: 'Optimizadas para almacenamiento',
         costoAlquiler: 30,
         costoEncendido: 3.5,
         stock: 5,

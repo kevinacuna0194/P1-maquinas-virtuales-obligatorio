@@ -29,6 +29,14 @@ class UI extends Sistema {
                 div.removeChild(div.firstChild);
             }
         }
+    }
 
+    static limpiarBienvenida() {
+
+        const div = document.querySelector('#bienvenido');
+
+        while(div.firstChild) {
+            div.removeChild(div.firstChild);
+        }
     }
 }

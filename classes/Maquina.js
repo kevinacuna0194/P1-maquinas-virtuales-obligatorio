@@ -4,7 +4,7 @@ class Maquina {
 
     constructor(nombre, tipo, costo, costoEncendido, stock) {
 
-        this.id = Maquina.idMaquina++;
+        this.idMaquina = Maquina.idMaquina++;
         this.nombre = nombre ?? '';
         this.tipo = tipo ?? '';
         this.costoAlquiler = costo ?? null;
