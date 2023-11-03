@@ -5,6 +5,7 @@ class Sistema {
         this.usuarios = new Array();
         this.maquinas = new Array();
         this.maquinasAlquiladas = new Array();
+        this.administradores = new Array();
         this.logueado = null;
     }
 
@@ -28,6 +29,8 @@ class Sistema {
 
             let letra = numeroTarjeta.charAt(index);
             let code = numeroTarjeta.charCodeAt(index);
+
+            console.log('Letra', letra, 'Codigo ASCCI', code);
 
             if (isNaN(letra)) {
                 caracter = true;
@@ -281,9 +284,8 @@ class Sistema {
     obtenerUsuario(nombreUsuario) {
 
         let existe = null;
-        let index = 0;
 
-        while (existe === null && index < this.usuarios.length) {
+        for (let index = 0; existe === null && index < this.usuarios.length; index++) {
 
             let usuario = this.usuarios[index];
 
@@ -294,6 +296,18 @@ class Sistema {
             index++;
         }
 
+        for (let index = 0; existe === null && index < this.administradores.length; index++) {
+
+            let administrador = this.administradores[index];
+
+            if (nombreUsuario === administrador.nombreUsuario) {
+                existe = administrador;
+            }
+
+            index++;
+        }
+
+        console.log(existe);
         return existe; /** Objeto de usuario encontrado */
     }
 
@@ -310,7 +324,7 @@ class Sistema {
 
         let machine = null;
 
-        for(let maquina of sistema.maquinas) {
+        for (let maquina of sistema.maquinas) {
 
             if (maquina.idMaquina === idMaquina) {
 
@@ -325,7 +339,7 @@ class Sistema {
 
         let maquinaAlquilada = null;
 
-        for(let maquina of sistema.maquinasAlquiladas) {
+        for (let maquina of sistema.maquinasAlquiladas) {
 
             if (maquina.idAlquiler === idAlquiler) {
 
@@ -377,6 +391,7 @@ class Sistema {
 
                 /** Actualizar tabla **/
                 this.tablaMaquinas();
+                this.tablaCostosTotales();
 
                 UI.imprimirAlerta(`Instancia Alquilada: <b><u>${nombre}</u></b>`, 'exito', 'resultadoFormMaquina');
 
@@ -452,6 +467,7 @@ class Sistema {
         }
     }
 
+
     accionesTabla() {
 
         if (this.maquinasAlquiladas.length !== 0) {
@@ -486,22 +502,87 @@ class Sistema {
             }
 
             sistema.tablaMaquinas();
+            sistema.tablaCostosTotales();
         }
     }
 
     estadoMaquina(maquinaAlquilada) {
 
         let estado = '';
-    
+
         if (maquinaAlquilada.estado === 'ON') {
             estado = 'OFF'
         }
-    
+
         if (maquinaAlquilada.estado === 'OFF') {
             estado = 'ON'
-    
+
         }
-    
+
         return estado;
+    }
+
+    tablaCostosTotales() {
+
+        if (sistema.maquinasAlquiladas.length > 0) {
+
+            let tabla =
+                `<table>
+                <thead class="heading">
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Tipo de Instancia</th>
+                        <th>Costo por encendido</th>
+                        <th>Total de veces encendidas</th>
+                        <th>Costo total</th>
+                    </tr>
+                </thead>
+                <tbody>`;
+
+            for (let maquinaAlquilada of sistema.maquinasAlquiladas) {
+
+                /** calcular y retornar total */
+                const costoTotal = this.costoTotal(maquinaAlquilada);
+
+                const { nombre, tipo, costoEncendido, iniciada } = maquinaAlquilada;
+
+                tabla +=
+                    `<tr>
+                        <td>${nombre}</td>
+                        <td>${tipo}</td>
+                        <td>${costoEncendido}</td>
+                        <td><b>${iniciada}</b></td>
+                        <td><b>${costoTotal}</b></td>
+                    </tr>`
+            }
+
+            tabla +=
+                `</body>
+                </table>`
+
+            document.querySelector('#tablaCostoTotalAlquiler').innerHTML = tabla;
+        }
+    }
+
+    costoTotal(maquina) {
+
+        let total = 0;
+
+        const { iniciada, costoAlquiler, costoEncendido } = maquina;
+
+        total = (costoEncendido * iniciada) + costoAlquiler;
+
+        return total;
+    }
+
+    /** Administrador **/
+    agregarAdministrador(object) {
+
+        const { nombre, nombreUsuario, password } = object;
+
+        const administrador = new Administrador(nombre, nombreUsuario, password);
+
+        // this.administradores = [...this.administradores, administrador];
+        this.administradores.push(administrador);
     }
 }

@@ -33,6 +33,7 @@ console.log(sistema);
 /** Pre Cargar Datos */
 preCargarDatosUsuario();
 preCargarDatosMaquina();
+preCargarAdministrador();
 
 /** Funciones */
 function login() {
@@ -43,6 +44,8 @@ function login() {
     if (usuario.validarNombreUsuario(nombreUsuario, 'resultadoLogin')) {
 
         if (usuario.validarPassword(password, 'resultadoLogin')) {
+
+            console.log(password);
 
             if (sistema.login(nombreUsuario, password)) {
 

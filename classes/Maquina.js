@@ -11,7 +11,7 @@ class Maquina {
         this.costoEncendido = costoEncendido ?? null;
         this.estado = 'ON';
         this.stock = stock ?? null;
-        this.iniciada = 1;
+        this.iniciada = 0;
     }
 
     validarMaquina(id) {

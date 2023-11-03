@@ -95,3 +95,31 @@ function preCargarDatosMaquina() {
     sistema.agregarMaquina(maquinaAlmacenamiento1);
     sistema.agregarMaquina(maquinaAlmacenamiento2);
 }
+
+function preCargarAdministrador() {
+
+    const administrador1 = {
+
+        nombre: 'administrador1',
+        nombreUsuario: 'admin1',
+        password: 'Admin1'
+    }
+
+    const administrador2 = {
+
+        nombre: 'administrador2',
+        nombreUsuario: 'admin2',
+        password: 'Admin2'
+    }
+
+    const administrador3 = {
+
+        nombre: 'administrador3',
+        nombreUsuario: 'admin3',
+        password: 'Admin3'
+    }
+
+    sistema.agregarAdministrador(administrador1);
+    sistema.agregarAdministrador(administrador2);
+    sistema.agregarAdministrador(administrador3);
+}

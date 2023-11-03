@@ -41,7 +41,7 @@
                 </li>
 
                 <li>
-                    <a class="enlaceNavegacion" data-id="ListadoTotales"></a>
+                    <a class="enlaceNavegacion" data-id="ListadoTotales">Costo Total Alquileres</a>
                 </li>
 
             </ul> <!--? ul #navPrincipal -->
@@ -74,12 +74,12 @@
                     <div class="campo">
                         <label for="nombreUsuarioLogin">Nombre de Usuario:</label>
                         <input type="text" id="nombreUsuarioLogin" placeholder="Ingrese el nombre de usuario"
-                            value="kevin">
+                            value="admin1">
                     </div> <!--? campo -->
 
                     <div class="campo">
                         <label for="passwordLogin">Password:</label>
-                        <input type="text" id="passwordLogin" placeholder="Ingrese su password" value="Kevin01">
+                        <input type="text" id="passwordLogin" placeholder="Ingrese su password" value="Admin1">
                     </div> <!--? campo -->
 
                     <div>
@@ -186,19 +186,28 @@
 
             <h2 class="nombre-pagina">Listado de Máquinas Alquiladas y su Estado</h2>
 
-            <form action="/" class="formulario">
-                <div class="resultado" id="resultadoFormListadoMaquina"></div> <!--? resultado -->
-            </form>
+            <div id="tablaMaquinas" class="tabla">
+                <h2 class="descripcion-pagina" style="color: red;">No hay Registros</h2>
+            </div>
 
-            <div id="tablaMaquinas">
+        </div> <!--? #divListadoMaquinas -->
+
+        <div id="divListadoTotales">
+
+            <h2 class="nombre-pagina">Costo Total de Alquileres</h2>
+
+            <div id="tablaCostoTotalAlquiler" class="tabla">
                 <h2 class="descripcion-pagina" style="color: red;">No hay Registros</h2>
             </div>
 
         </div> <!--? #divListadoMaquinas -->
 
         <footer id="footer">
-            <a href="https://github.com/kevinacuna0194/P1-Obligatorio11-2023.git" target="_blank"><p class="descripcion-pagina"><b><u>Kevin Acuña Nº Estudiante 246410</u>. Todos los derechos reservados &copy;</b></p></a>
-        </footer>
+            <a href="https://github.com/kevinacuna0194/P1-Obligatorio11-2023.git" target="_blank">
+                <p class="descripcion-pagina"><b><u>Kevin Acuña Nº Estudiante 246410</u>. Todos los derechos reservados
+                        &copy;</b></p>
+            </a>
+        </footer> <!--? Footer -->
 
     </div> <!--? .contenedor -->
 
