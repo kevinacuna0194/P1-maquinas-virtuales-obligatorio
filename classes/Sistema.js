@@ -292,8 +292,6 @@ class Sistema {
             if (nombreUsuario === usuario.nombreUsuario) {
                 existe = usuario;
             }
-
-            index++;
         }
 
         for (let index = 0; existe === null && index < this.administradores.length; index++) {
@@ -303,11 +301,8 @@ class Sistema {
             if (nombreUsuario === administrador.nombreUsuario) {
                 existe = administrador;
             }
-
-            index++;
         }
 
-        console.log(existe);
         return existe; /** Objeto de usuario encontrado */
     }
 
@@ -584,5 +579,31 @@ class Sistema {
 
         // this.administradores = [...this.administradores, administrador];
         this.administradores.push(administrador);
+    }
+
+    tipoUsuario(nombreUsuario) {
+
+        let tipoUsuario = '';
+
+        for (let index = 0; index < this.usuarios.length; index++) {
+
+            let usuario = this.usuarios[index];
+
+            if (nombreUsuario === usuario.nombreUsuario) {
+                tipoUsuario = 'usuario';
+            }
+        }
+
+        for (let index = 0; index < this.administradores.length; index++) {
+
+            let administrador = this.administradores[index];
+
+            if (nombreUsuario === administrador.nombreUsuario) {
+                tipoUsuario = 'administrador';
+            }
+        }
+
+        console.log('Tipo usuario:', tipoUsuario);
+        return tipoUsuario;
     }
 }

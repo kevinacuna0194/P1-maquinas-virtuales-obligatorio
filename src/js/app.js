@@ -15,7 +15,7 @@ function obligatorio() {
 }
 
 cargarNavegacion();
-ocultarTodo(); /** Ocultar todo el contenido HTML */
+ocultarTodo(); /** Ocultar todo el contenido HTML *
 
 /** Mostrar solamente Login cuando se inicia la app*/
 iniciarObligatorio();
@@ -45,8 +45,6 @@ function login() {
 
         if (usuario.validarPassword(password, 'resultadoLogin')) {
 
-            console.log(password);
-
             if (sistema.login(nombreUsuario, password)) {
 
                 UI.imprimirAlerta('Iniciando Sesión...', 'exito', 'resultadoLogin');
@@ -56,14 +54,15 @@ function login() {
                     UI.limpiarBienvenida();
                     bienvenido();
 
-                    mostrarSecciones('usuario');
+                    mostrarSecciones(nombreUsuario);
                     /** Ocultar Login */
                     document.querySelector("#divLogin").style.display = "none";
 
                     sistema.selectMaquina();
 
                     sistema.tablaMaquinas();
-                    // sistema.prender();
+
+                    mostrarEnlace(nombreUsuario);
 
                 }, 1000);
 

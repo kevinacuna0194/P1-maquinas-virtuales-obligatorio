@@ -40,7 +40,19 @@ function mostrarSeccion() {
     }
 }
 
-function mostrarSecciones(clase) {
+function mostrarSecciones(nombreUsuario) {
+
+    const tipoUsuario = sistema.tipoUsuario(nombreUsuario);
+
+    let nodeList = document.querySelectorAll(`.${tipoUsuario}`);
+
+    for (let div of nodeList) {
+
+        div.style.display = 'block';
+    }
+}
+
+function mostrarEnlaces(clase) {
 
     let nodeList = document.querySelectorAll(`.${clase}`);
 
@@ -52,10 +64,34 @@ function mostrarSecciones(clase) {
 
 function bienvenido() {
 
-    const { nombre, apellido, id } = sistema.logueado;
+    const { nombreUsuario, id } = sistema.logueado;
 
     const p = document.createElement('P');
-    p.innerHTML = `<span class="spanBienvenido">Bienvenido:</span> ${nombre} ${apellido} <span class="spanBienvenido">ID:</span> ${id}`;
+    p.innerHTML = `<span class="spanBienvenido">Bienvenido:</span> ${nombreUsuario} <span class="spanBienvenido">ID:</span> ${id}`;
 
     document.querySelector('#bienvenido').appendChild(p);
+}
+
+function ocultarEnlace() {
+
+    let enlaceNavegacion = document.querySelectorAll(`.enlaceNavegacion`);
+
+    for (let enlace of enlaceNavegacion) {
+
+        enlace.style.display = 'none';
+    }
+}
+
+function mostrarEnlace(nombreUsuario) {
+
+    ocultarEnlace();
+
+    const tipoUsuario = sistema.tipoUsuario(nombreUsuario);
+
+    let enlaceNavegacion = document.querySelectorAll(`.${tipoUsuario}`);
+
+    for (let enlace of enlaceNavegacion) {
+
+        enlace.style.display = 'block';
+    }
 }

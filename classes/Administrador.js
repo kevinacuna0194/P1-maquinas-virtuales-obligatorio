@@ -4,9 +4,9 @@ class Administrador {
 
     constructor(nombre, nombreUsuario, password) {
 
-        this.IdAdministrador = Administrador.IdAdministrador++;
+        this.id = Administrador.IdAdministrador++;
         this.nombre = nombre ?? '';
         this.nombreUsuario = nombreUsuario ?? '';
-        this.password = password ?? null; 
+        this.password = password ?? null;
     }
 }
