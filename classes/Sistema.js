@@ -3,6 +3,7 @@ class Sistema {
     constructor() {
 
         this.usuarios = new Array();
+        this.usuariosPendientes = new Array();
         this.maquinas = new Array();
         this.maquinasAlquiladas = new Array();
         this.administradores = new Array();
@@ -29,8 +30,6 @@ class Sistema {
 
             let letra = numeroTarjeta.charAt(index);
             let code = numeroTarjeta.charCodeAt(index);
-
-            console.log('Letra', letra, 'Codigo ASCCI', code);
 
             if (isNaN(letra)) {
                 caracter = true;
@@ -239,23 +238,29 @@ class Sistema {
         return caracter;
     } /** si contiene caracteres que no son números retorna true */
 
-    agregarUsuario(nombre, apellido, nombreUsuario, password, numeroTarjeta, cvc) {
+    agregarUsuario(object) {
 
         let agregado = false;
 
+        const { nombre, apellido, nombreUsuario, password, numeroTarjeta, cvc } = object;
+
         if (usuario.validarUsuario(nombre, apellido, nombreUsuario, password, numeroTarjeta, cvc)) {
 
-            let usuario = new Usuario();
+            if (object.aprobado === true) {
 
-            usuario.nombre = nombre;
-            usuario.apellido = apellido;
-            usuario.nombreUsuario = nombreUsuario;
-            usuario.password = password;
-            usuario.numeroTarjeta = numeroTarjeta;
-            usuario.cvc = cvc;
+                const usuario = new Usuario(nombre, apellido, nombreUsuario, password, numeroTarjeta, cvc);
+                usuario.aprobado = true;
 
-            // Agregar al arreglo de usuarios
-            this.usuarios.push(usuario);
+                // Agregar al arreglo de usuarios
+                this.usuarios.push(usuario);
+
+            } else {
+
+                const usuario = new Usuario(nombre, apellido, nombreUsuario, password, numeroTarjeta, cvc);
+
+                // Agregar al arreglo de usuarios
+                this.usuariosPendientes.push(usuario);
+            }
 
             agregado = true;
         }
@@ -384,6 +389,7 @@ class Sistema {
                 // this.maquinasAlquiladas = [...this.maquinasAlquiladas, alquilada];
                 this.maquinasAlquiladas.push(alquiler);
 
+                this.selectMaquina();
                 /** Actualizar tabla **/
                 this.tablaMaquinas();
                 this.tablaCostosTotales();
@@ -394,8 +400,6 @@ class Sistema {
                 // this.maquinas.splice(posicion, 1);
                 UI.imprimirAlerta(`Sin Stock: <b><u>${nombre}</u></b>`, 'error', 'resultadoFormMaquina');
             }
-
-            this.selectMaquina();
         }
     }
 
@@ -439,7 +443,8 @@ class Sistema {
 
                 let maquina = this.maquinasAlquiladas[index];
 
-                const { idAlquiler, idMaquina, nombre, tipo, estado, iniciada } = maquina;
+
+                const { idAlquiler, nombre, tipo, estado, iniciada } = maquina;
 
                 tabla +=
                     `<tr>
@@ -603,7 +608,134 @@ class Sistema {
             }
         }
 
-        console.log('Tipo usuario:', tipoUsuario);
         return tipoUsuario;
+    }
+
+    tablaUsuariosAprobados() {
+
+        if (this.usuarios.length > 0) {
+
+            let tabla =
+                `<table>
+                <thead class="heading">
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Nombre de Usuario</th>
+                        <th>Aprobado</th>
+                        <th>Bloqueado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>`;
+
+            for (let usuarioAprobado of sistema.usuarios) {
+
+                const { id, nombre, apellido, nombreUsuario, aprobado, bloqueado } = usuarioAprobado;
+
+                tabla +=
+                    `<tr>
+                        <td><b>${id}</b></td>
+                        <td>${nombre}</td>
+                        <td>${apellido}</td>
+                        <td>${nombreUsuario}</td>
+                        <td><b>${aprobado}</b></td>
+                        <td><b>${bloqueado}</b></td>
+                        <td><input type="button" value="Bloquear" id="btnBloquear" data-usuario="${id}"</td>
+                    </tr>`
+            }
+
+            tabla +=
+                `</body>
+                </table>`
+
+            document.querySelector('#tablaListadoUsuariosAprobados').innerHTML = tabla;
+        }
+    }
+
+    tablaUsuariosPendientes() {
+
+        if (this.usuariosPendientes.length > 0) {
+
+            let tabla =
+                `<table>
+                <thead class="heading">
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Nombre de Usuario</th>
+                        <th>Aprobado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>`;
+
+            for (let usuarioPendiente of sistema.usuariosPendientes) {
+
+                const { id, nombre, apellido, nombreUsuario, aprobado } = usuarioPendiente;
+
+                tabla +=
+                    `<tr>
+                        <td><b>${id}</b></td>
+                        <td>${nombre}</td>
+                        <td>${apellido}</td>
+                        <td>${nombreUsuario}</td>
+                        <td><b>${aprobado}</b></td>
+                        <td><input type="button" value="Aprobar" id="btnAprobar" data-usuario="${id}"</td>
+                    </tr>`
+            }
+
+            tabla +=
+                `</body>
+                </table>`
+
+            document.querySelector('#tablaListadoUsuariosPendientes').innerHTML = tabla;
+
+            this.accionAprobar();
+
+        } else {
+
+            const h2 = `<h2 class="descripcion-pagina" style="color: red;">No hay Registros</h2>`;
+            document.querySelector('#tablaListadoUsuariosPendientes').innerHTML = h2;
+        }
+    }
+
+    accionAprobar() {
+
+        if (this.usuariosPendientes.length !== 0) {
+
+            let btnAprobar = document.querySelectorAll(`#btnAprobar`);
+
+            for (let boton of btnAprobar) {
+
+                boton.addEventListener('click', this.aprobarUsuario);
+            }
+        }
+    }
+
+    aprobarUsuario() {
+
+        const idUsuarioBoton = Number(this.getAttribute('data-usuario'));
+        let posicion = 0;
+        let usuarioAprobado = null;
+
+        for (let index = 0; usuarioAprobado === null && index < sistema.usuariosPendientes.length; index++) {
+
+            let usuarioPendiente = sistema.usuariosPendientes[index];
+
+            if (idUsuarioBoton === usuarioPendiente.id) {
+
+                posicion = index;
+                usuarioAprobado = usuarioPendiente;
+            }
+        }
+
+        sistema.usuarios.push(usuarioAprobado);
+        sistema.usuariosPendientes.splice(posicion, 1);
+
+        sistema.tablaUsuariosAprobados();
+        sistema.tablaUsuariosPendientes();
     }
 }

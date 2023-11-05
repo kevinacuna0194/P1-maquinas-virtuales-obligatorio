@@ -456,7 +456,7 @@ button {
     }
 }
 
-#btnApagarPrender {
+#btnApagarPrender, #btnBloquear, #btnAprobar {
     width: 100%;
 }
 

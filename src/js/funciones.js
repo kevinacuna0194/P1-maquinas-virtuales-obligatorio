@@ -4,6 +4,7 @@ function ocultarTodo() {
     document.querySelector('#divAlquilerMaquina').style.display = 'none';
     document.querySelector('#divListadoMaquinas').style.display = 'none';
     document.querySelector('#divListadoTotales').style.display = 'none';
+    document.querySelector('#divListadoUsuarios').style.display = 'none';
 }
 
 function cargarNavegacion() {
@@ -31,11 +32,11 @@ function mostrarSeccion() {
     }
 
     if (sistema.logueado !== null) {
-        // limpiarInformacionAnterior();
 
         document.querySelector(`#div${seccion}`).style.display = 'block';
 
     } else {
+
         document.querySelector('#divLogin').style.display = 'block';
     }
 }
@@ -52,15 +53,15 @@ function mostrarSecciones(nombreUsuario) {
     }
 }
 
-function mostrarEnlaces(clase) {
+// function mostrarEnlaces(clase) {
 
-    let nodeList = document.querySelectorAll(`.${clase}`);
+//     let nodeList = document.querySelectorAll(`.${clase}`);
 
-    for (let div of nodeList) {
+//     for (let div of nodeList) {
 
-        div.style.display = 'block';
-    }
-}
+//         div.style.display = 'block';
+//     }
+// }
 
 function bienvenido() {
 
@@ -86,12 +87,21 @@ function mostrarEnlace(nombreUsuario) {
 
     ocultarEnlace();
 
-    const tipoUsuario = sistema.tipoUsuario(nombreUsuario);
+    if (sistema.logueado !== null) {
 
-    let enlaceNavegacion = document.querySelectorAll(`.${tipoUsuario}`);
+        const tipoUsuario = sistema.tipoUsuario(nombreUsuario);
+    
+        let enlaceNavegacion = document.querySelectorAll(`.${tipoUsuario}`);
+    
+        for (let enlace of enlaceNavegacion) {
+    
+            enlace.style.display = 'block';
+        }
 
-    for (let enlace of enlaceNavegacion) {
+    } else {
 
-        enlace.style.display = 'block';
+        document.querySelector('#enlaceLogin').style.display = 'block';
+        document.querySelector('#enlaceRegistrarse').style.display = 'block';
     }
+
 }

@@ -1,14 +1,17 @@
 function preCargarDatosUsuario() {
     /** constructor (nombre, apellido, nombreUsuario, password, numeroTarjeta, cvc, aprobado, logueado) */
-    const nombre = 'Kevin';
-    const apellido = 'Acuña';
-    const nombreUsuario = 'kevin';
-    const password = 'Kevin01';
-    const numeroTarjeta = 5158459996466345;
-    const cvc = 223;
-    const aprobado = false;
 
-    sistema.agregarUsuario(nombre, apellido, nombreUsuario, password, numeroTarjeta, cvc, aprobado); /** Retorna true si se agrega correctamente */
+    const usuario1 = {
+        nombre: 'Kevin',
+        apellido: 'Acuña',
+        nombreUsuario: 'kevin',
+        password: 'Kevin01',
+        numeroTarjeta: 5158459996466345,
+        cvc: 223,
+        aprobado: true
+    }
+
+    sistema.agregarUsuario(usuario1); /** Retorna true si se agrega correctamente */
 
     if (sistema.agregarUsuario) { /** retorna true o false */
 
@@ -98,22 +101,21 @@ function preCargarDatosMaquina() {
 
 function preCargarAdministrador() {
 
-    const administrador1 = {
+    
 
+    const administrador1 = {
         nombre: 'administrador1',
         nombreUsuario: 'admin1',
         password: 'Admin1'
     }
 
     const administrador2 = {
-
         nombre: 'administrador2',
         nombreUsuario: 'admin2',
         password: 'Admin2'
     }
 
     const administrador3 = {
-
         nombre: 'administrador3',
         nombreUsuario: 'admin3',
         password: 'Admin3'
@@ -122,4 +124,49 @@ function preCargarAdministrador() {
     sistema.agregarAdministrador(administrador1);
     sistema.agregarAdministrador(administrador2);
     sistema.agregarAdministrador(administrador3);
+}
+
+function preCargarUsuariosPendientes() {
+
+    const usuario2 = {
+        nombre: 'Usuario2',
+        apellido: 'Usuario2',
+        nombreUsuario: 'usuario2',
+        password: 'Usuario2',
+        numeroTarjeta: 5158459996466345,
+        cvc: 223,
+    }
+
+    const usuario3 = {
+        nombre: 'Usuario3',
+        apellido: 'Usuario3',
+        nombreUsuario: 'usuario3',
+        password: 'Usuario3',
+        numeroTarjeta: 5158459996466345,
+        cvc: 223,
+    }
+
+    const usuario4 = {
+        nombre: 'Usuario4',
+        apellido: 'Usuario4',
+        nombreUsuario: 'usuario4',
+        password: 'Usuario4',
+        numeroTarjeta: 5158459996466345,
+        cvc: 223,
+    }
+
+    const usuario5 = {
+
+        nombre: 'Usuario5',
+        apellido: 'Usuario5',
+        nombreUsuario: 'usuario5',
+        password: 'Usuario5',
+        numeroTarjeta: 5158459996466345,
+        cvc: 223,
+    }
+
+    sistema.agregarUsuario(usuario2);
+    sistema.agregarUsuario(usuario3);
+    sistema.agregarUsuario(usuario4);
+    sistema.agregarUsuario(usuario5);
 }

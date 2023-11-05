@@ -14,8 +14,14 @@ function obligatorio() {
     });
 }
 
+/** Instancias */
+const sistema = new Sistema();
+const usuario = new Usuario();
+const maquina = new Maquina();
+
+ocultarTodo(); /** Ocultar todo el contenido HTML */
 cargarNavegacion();
-ocultarTodo(); /** Ocultar todo el contenido HTML *
+mostrarEnlace();
 
 /** Mostrar solamente Login cuando se inicia la app*/
 iniciarObligatorio();
@@ -23,17 +29,12 @@ function iniciarObligatorio() {
     document.querySelector('#divLogin').style.display = 'block';
 }
 
-/** Instancias */
-const sistema = new Sistema();
-const usuario = new Usuario();
-const maquina = new Maquina();
-
-console.log(sistema);
-
 /** Pre Cargar Datos */
 preCargarDatosUsuario();
 preCargarDatosMaquina();
 preCargarAdministrador();
+preCargarUsuariosPendientes();
+
 
 /** Funciones */
 function login() {
@@ -55,12 +56,19 @@ function login() {
                     bienvenido();
 
                     mostrarSecciones(nombreUsuario);
+
                     /** Ocultar Login */
                     document.querySelector("#divLogin").style.display = "none";
 
                     sistema.selectMaquina();
 
                     sistema.tablaMaquinas();
+
+                    sistema.tablaCostosTotales()
+
+                    sistema.tablaUsuariosPendientes();
+
+                    sistema.tablaUsuariosAprobados();
 
                     mostrarEnlace(nombreUsuario);
 

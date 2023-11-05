@@ -12,6 +12,7 @@ class Usuario {
         this.numeroTarjeta = numeroTarjeta ?? '';
         this.cvc = cvc ?? '';
         this.aprobado = false;
+        this.bloqueado = false;
     }
 
     validarNombre(nombre, idDiv) {
@@ -253,7 +254,6 @@ class Usuario {
 
     validarRegistro(nombre, apellido, nombreUsuario, password, numeroTarjeta, cvc) {
         return usuario.validarNombre(nombre) && usuario.validarApellido(apellido) && usuario.validarNombreUsuario(nombreUsuario) && usuario.validarPassword(password) && sistema.validarNumeroTarjeta(numeroTarjeta) && sistema.validarCvc(cvc);
-
     }
 
 }

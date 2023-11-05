@@ -25,11 +25,11 @@
             <ul id="navPrincipal">
 
                 <li>
-                    <a class="enlaceNavegacion usuario administrador" data-id="Login">Login</a>
+                    <a class="enlaceNavegacion usuario administrador" data-id="Login" id="enlaceLogin">Login</a>
                 </li>
 
                 <li>
-                    <a class="enlaceNavegacion usuario" data-id="Registrarse">Registrarse</a>
+                    <a class="enlaceNavegacion usuario" data-id="Registrarse" id="enlaceRegistrarse">Registrarse</a>
                 </li>
 
                 <li>
@@ -42,6 +42,10 @@
 
                 <li>
                     <a class="enlaceNavegacion usuario" data-id="ListadoTotales">Costo Total Alquileres</a>
+                </li>
+
+                <li>
+                    <a class="enlaceNavegacion administrador" data-id="ListadoUsuarios">Listado Usuarios</a>
                 </li>
 
             </ul> <!--? ul #navPrincipal -->
@@ -74,12 +78,12 @@
                     <div class="campo">
                         <label for="nombreUsuarioLogin">Nombre de Usuario:</label>
                         <input type="text" id="nombreUsuarioLogin" placeholder="Ingrese el nombre de usuario"
-                            value="admin2">
+                            value="admin1">
                     </div> <!--? campo -->
 
                     <div class="campo">
                         <label for="passwordLogin">Password:</label>
-                        <input type="text" id="passwordLogin" placeholder="Ingrese su password" value="Admin2">
+                        <input type="text" id="passwordLogin" placeholder="Ingrese su password" value="Admin1">
                     </div> <!--? campo -->
 
                     <div>
@@ -197,6 +201,22 @@
             <h2 class="nombre-pagina">Costo Total de Alquileres</h2>
 
             <div id="tablaCostoTotalAlquiler" class="tabla">
+                <h2 class="descripcion-pagina" style="color: red;">No hay Registros</h2>
+            </div>
+
+        </div> <!--? #divListadoMaquinas -->
+
+        <div id="divListadoUsuarios" class="administrador">
+
+            <h2 class="nombre-pagina">Usuarios Aprobados</h2>
+
+            <div id="tablaListadoUsuariosAprobados" class="tabla">
+                <h2 class="descripcion-pagina" style="color: red;">No hay Registros</h2>
+            </div>
+
+            <h2 class="nombre-pagina">Usuarios Pendientes Aprobación</h2>
+
+            <div id="tablaListadoUsuariosPendientes" class="tabla">
                 <h2 class="descripcion-pagina" style="color: red;">No hay Registros</h2>
             </div>
 
