@@ -52,10 +52,9 @@ function login() {
 
                 setTimeout(() => {
 
-                    UI.limpiarBienvenida();
-                    bienvenido();
+                    mostrarEnlace(nombreUsuario);
 
-                    mostrarSecciones(nombreUsuario);
+                    bienvenido();
 
                     /** Ocultar Login */
                     document.querySelector("#divLogin").style.display = "none";
@@ -69,8 +68,6 @@ function login() {
                     sistema.tablaUsuariosPendientes();
 
                     sistema.tablaUsuariosAprobados();
-
-                    mostrarEnlace(nombreUsuario);
 
                 }, 1000);
 

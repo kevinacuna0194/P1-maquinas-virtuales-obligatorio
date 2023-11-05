@@ -16,7 +16,7 @@ class UI extends Sistema {
         
         setTimeout(() => {
             parrafo.remove();
-        }, 3000);
+        }, 1000);
     }
 
     static limpiarHTML() {
@@ -34,6 +34,15 @@ class UI extends Sistema {
     static limpiarBienvenida() {
 
         const div = document.querySelector('#bienvenido');
+
+        while(div.firstChild) {
+            div.removeChild(div.firstChild);
+        }
+    }
+
+    static limpiarUsuariosAprobados() {
+
+        const div = document.querySelector('#resultadoListadoUsuariosAprobados');
 
         while(div.firstChild) {
             div.removeChild(div.firstChild);

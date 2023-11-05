@@ -16,12 +16,14 @@
     <div class="contenedor">
 
         <div id="cabezal" class="clearfix">
+
             <div class="logo">
                 <a href="/">
-                    <img id="logo" src="src/img/logo4.svg" alt="Logo">
+                    <img class="logo" src="src/img/logo4.svg" alt="Logo">
                 </a>
 
             </div>
+
             <ul id="navPrincipal">
 
                 <li>
@@ -48,6 +50,10 @@
                     <a class="enlaceNavegacion administrador" data-id="ListadoUsuarios">Listado Usuarios</a>
                 </li>
 
+                <li>
+                    <a class="enlaceNavegacion administrador" data-id="UsuariosBloqueados">Usuarios Bloqueados</a>
+                </li>
+
             </ul> <!--? ul #navPrincipal -->
         </div> <!--? #cabezal -->
 
@@ -69,7 +75,7 @@
 
             <h2 class="nombre-pagina">Login</h2>
 
-            <form action="#" class="formulario ">
+            <form id="formLogin" class="formulario">
 
                 <div class="resultado" id="resultadoLogin"></div> <!--? resultado -->
 
@@ -184,7 +190,7 @@
                 </fieldset>
             </form>
 
-        </div> <!--? #divAlquilerMaquina -->
+        </div> <!--? Select Alquilar Máquina -->
 
         <div id="divListadoMaquinas">
 
@@ -194,7 +200,7 @@
                 <h2 class="descripcion-pagina" style="color: red;">No hay Registros</h2>
             </div>
 
-        </div> <!--? #divListadoMaquinas -->
+        </div> <!--? Listado de Máquinas Alquiladas -->
 
         <div id="divListadoTotales">
 
@@ -204,23 +210,39 @@
                 <h2 class="descripcion-pagina" style="color: red;">No hay Registros</h2>
             </div>
 
-        </div> <!--? #divListadoMaquinas -->
+        </div> <!--? Listado de Cosotos Totales -->
 
         <div id="divListadoUsuarios" class="administrador">
 
             <h2 class="nombre-pagina">Usuarios Aprobados</h2>
 
+            <div id="resultadoListadoUsuariosAprobados"></div> <!--? resultado -->
+
             <div id="tablaListadoUsuariosAprobados" class="tabla">
                 <h2 class="descripcion-pagina" style="color: red;">No hay Registros</h2>
-            </div>
+            </div> <!--? Tabla de Usuario Aprobados -->
 
             <h2 class="nombre-pagina">Usuarios Pendientes Aprobación</h2>
 
+            <div class="resultado" id="resultadoListadoUsuariosPendientes"></div> <!--? resultado -->
+
             <div id="tablaListadoUsuariosPendientes" class="tabla">
+                <h2 class="descripcion-pagina" style="color: red;">No hay Registros</h2>
+            </div> <!--? Tabla de Usuario Pendientes -->
+
+        </div> <!--? #divListadoUsuarios -->
+
+        <div id="divUsuariosBloqueados">
+
+            <h2 class="nombre-pagina">Listado de Usuarios Bloqueados</h2>
+
+            <div class="resultado" id="resultadoListadoUsuariosBloqueados"></div> <!--? resultado -->
+
+            <div id="tablaUsuariosBloqueados" class="tabla">
                 <h2 class="descripcion-pagina" style="color: red;">No hay Registros</h2>
             </div>
 
-        </div> <!--? #divListadoMaquinas -->
+        </div> <!--? Listado de Usuarios Bloqueados -->
 
         <footer id="footer">
             <a href="https://github.com/kevinacuna0194/P1-Obligatorio11-2023.git" target="_blank">

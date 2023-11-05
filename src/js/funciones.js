@@ -5,6 +5,7 @@ function ocultarTodo() {
     document.querySelector('#divListadoMaquinas').style.display = 'none';
     document.querySelector('#divListadoTotales').style.display = 'none';
     document.querySelector('#divListadoUsuarios').style.display = 'none';
+    document.querySelector('#divUsuariosBloqueados').style.display = 'none';
 }
 
 function cargarNavegacion() {
@@ -41,17 +42,17 @@ function mostrarSeccion() {
     }
 }
 
-function mostrarSecciones(nombreUsuario) {
+// function mostrarSecciones(nombreUsuario) {
 
-    const tipoUsuario = sistema.tipoUsuario(nombreUsuario);
+//     const tipoUsuario = sistema.tipoUsuario(nombreUsuario);
 
-    let nodeList = document.querySelectorAll(`.${tipoUsuario}`);
+//     let nodeList = document.querySelectorAll(`.${tipoUsuario}`);
 
-    for (let div of nodeList) {
+//     for (let div of nodeList) {
 
-        div.style.display = 'block';
-    }
-}
+//         div.style.display = 'block';
+//     }
+// }
 
 // function mostrarEnlaces(clase) {
 
@@ -64,6 +65,8 @@ function mostrarSecciones(nombreUsuario) {
 // }
 
 function bienvenido() {
+    
+    UI.limpiarBienvenida();
 
     const { nombreUsuario, id } = sistema.logueado;
 

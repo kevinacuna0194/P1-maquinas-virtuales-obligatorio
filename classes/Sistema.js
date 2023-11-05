@@ -4,6 +4,7 @@ class Sistema {
 
         this.usuarios = new Array();
         this.usuariosPendientes = new Array();
+        this.usuariosBloqueados = new Array();
         this.maquinas = new Array();
         this.maquinasAlquiladas = new Array();
         this.administradores = new Array();
@@ -270,6 +271,8 @@ class Sistema {
 
     login(nombreUsuario, password) {
 
+        UI.limpiarHTML();
+
         let encontrado = false;
 
         let usuario = this.obtenerUsuario(nombreUsuario); /** retorna objeto de usuario encontrado sino default null */
@@ -283,6 +286,7 @@ class Sistema {
             }
         }
 
+        document.querySelector('#formLogin').reset();
         return encontrado;
     }
 
@@ -374,7 +378,6 @@ class Sistema {
         if (maquinaAlquilada !== null) {
 
             let { idMaquina, nombre, tipo, costoAlquiler, costoEncendido, estado, stock, iniciada } = maquinaAlquilada;
-
             const idUsuario = this.logueado.id;
 
             if (stock > 0) {
@@ -426,6 +429,8 @@ class Sistema {
 
         if (sistema.maquinasAlquiladas.length > 0) {
 
+            const idUsuario = this.logueado.id;
+
             let tabla =
                 `<table>
                 <thead class="heading">
@@ -439,21 +444,22 @@ class Sistema {
                 </thead>
                 <tbody>`;
 
-            for (let index = 0; index < this.maquinasAlquiladas.length; index++) {
+            for (let maquinasAlquiladas of sistema.maquinasAlquiladas) {
 
-                let maquina = this.maquinasAlquiladas[index];
+                if (maquinasAlquiladas.idUsuario === idUsuario) {
 
+                    const { idAlquiler, nombre, tipo, estado, iniciada } = maquinasAlquiladas;
 
-                const { idAlquiler, nombre, tipo, estado, iniciada } = maquina;
-
-                tabla +=
-                    `<tr>
+                    tabla +=
+                        `<tr>
                         <td>${nombre}</td>
                         <td>${tipo}</td>
                         <td><b>${estado}</b></td>
                         <td><b>${iniciada}</b></td>
                         <td><input type="button" value="ON / OFF" id="btnApagarPrender" data-alquiler="${idAlquiler}"></td>
                     </tr>`
+
+                }
             }
 
             tabla +=
@@ -462,9 +468,14 @@ class Sistema {
 
             document.querySelector('#tablaMaquinas').innerHTML = tabla;
 
-            /** Permitir funcionalidad al boton apagar */
-            this.accionesTabla();
+        } else {
+
+            const h2 = `<h2 class="descripcion-pagina" style="color: red;">No hay Registros</h2>`;
+            document.querySelector('#tablaMaquinas').innerHTML = h2;
         }
+
+        /** Permitir funcionalidad al boton apagar */
+        this.accionesTabla();
     }
 
 
@@ -526,12 +537,15 @@ class Sistema {
 
         if (sistema.maquinasAlquiladas.length > 0) {
 
+            const idUsuario = this.logueado.id;
+
             let tabla =
                 `<table>
                 <thead class="heading">
                     <tr>
                         <th>Nombre</th>
                         <th>Tipo de Instancia</th>
+                        <th>Costo Alquiler</th>
                         <th>Costo por encendido</th>
                         <th>Total de veces encendidas</th>
                         <th>Costo total</th>
@@ -541,19 +555,23 @@ class Sistema {
 
             for (let maquinaAlquilada of sistema.maquinasAlquiladas) {
 
-                /** calcular y retornar total */
-                const costoTotal = this.costoTotal(maquinaAlquilada);
+                if (maquinaAlquilada.idUsuario === idUsuario) {
 
-                const { nombre, tipo, costoEncendido, iniciada } = maquinaAlquilada;
+                    /** calcular y retornar total */
+                    const costoTotal = this.costoTotal(maquinaAlquilada);
 
-                tabla +=
-                    `<tr>
+                    const { nombre, tipo, costoAlquiler, costoEncendido, iniciada } = maquinaAlquilada;
+
+                    tabla +=
+                        `<tr>
                         <td>${nombre}</td>
                         <td>${tipo}</td>
+                        <td>${costoAlquiler}</td>
                         <td>${costoEncendido}</td>
                         <td><b>${iniciada}</b></td>
                         <td><b>${costoTotal}</b></td>
                     </tr>`
+                }
             }
 
             tabla +=
@@ -561,6 +579,11 @@ class Sistema {
                 </table>`
 
             document.querySelector('#tablaCostoTotalAlquiler').innerHTML = tabla;
+
+        } else {
+
+            const h2 = `<h2 class="descripcion-pagina" style="color: red;">No hay Registros</h2>`;
+            document.querySelector('#tablaCostoTotalAlquiler').innerHTML = h2;
         }
     }
 
@@ -642,7 +665,7 @@ class Sistema {
                         <td>${nombreUsuario}</td>
                         <td><b>${aprobado}</b></td>
                         <td><b>${bloqueado}</b></td>
-                        <td><input type="button" value="Bloquear" id="btnBloquear" data-usuario="${id}"</td>
+                        <td><input type="button" value="Bloquear" id="btnBloquear" data-bloquear="${id}"</td>
                     </tr>`
             }
 
@@ -651,7 +674,15 @@ class Sistema {
                 </table>`
 
             document.querySelector('#tablaListadoUsuariosAprobados').innerHTML = tabla;
+
+            this.accionBloquear();
+
+        } else {
+
+            const h2 = `<h2 class="descripcion-pagina" style="color: red;">No hay Registros</h2>`;
+            document.querySelector('#tablaListadoUsuariosAprobados').innerHTML = h2;
         }
+
     }
 
     tablaUsuariosPendientes() {
@@ -683,7 +714,7 @@ class Sistema {
                         <td>${apellido}</td>
                         <td>${nombreUsuario}</td>
                         <td><b>${aprobado}</b></td>
-                        <td><input type="button" value="Aprobar" id="btnAprobar" data-usuario="${id}"</td>
+                        <td><input type="button" value="Aprobar" id="btnAprobar" data-aprobar="${id}"</td>
                     </tr>`
             }
 
@@ -717,7 +748,9 @@ class Sistema {
 
     aprobarUsuario() {
 
-        const idUsuarioBoton = Number(this.getAttribute('data-usuario'));
+        UI.limpiarHTML();
+
+        const idUsuarioBotonAprobar = Number(this.getAttribute('data-aprobar'));
         let posicion = 0;
         let usuarioAprobado = null;
 
@@ -725,17 +758,182 @@ class Sistema {
 
             let usuarioPendiente = sistema.usuariosPendientes[index];
 
-            if (idUsuarioBoton === usuarioPendiente.id) {
+            if (idUsuarioBotonAprobar === usuarioPendiente.id) {
 
                 posicion = index;
                 usuarioAprobado = usuarioPendiente;
             }
         }
 
+        usuarioAprobado.aprobado = true;
         sistema.usuarios.push(usuarioAprobado);
         sistema.usuariosPendientes.splice(posicion, 1);
+        UI.imprimirAlerta('Usuario Aprobado', 'exito', 'resultadoListadoUsuariosPendientes')
 
         sistema.tablaUsuariosAprobados();
         sistema.tablaUsuariosPendientes();
     }
+
+    accionBloquear() {
+
+        if (this.usuarios.length !== 0) {
+
+            let btnBloquear = document.querySelectorAll(`#btnBloquear`);
+
+            for (let boton of btnBloquear) {
+
+                boton.addEventListener('click', this.bloquearUsuario);
+            }
+        }
+    }
+
+    bloquearUsuario() {
+
+        UI.limpiarUsuariosAprobados();
+
+        const idUsuarioBotonBloquear = Number(this.getAttribute('data-bloquear'));
+
+        let encontrado = false;
+        let posicion = 0;
+
+        for (let index = 0; encontrado === false && index < sistema.usuarios.length; index++) {
+
+            let usuario = sistema.usuarios[index];
+
+            if (usuario.id === idUsuarioBotonBloquear && usuario.bloqueado !== true) {
+
+                console.log(usuario);
+                encontrado = true;
+                usuario.bloqueado = true;
+                usuario.aprobado = false;
+                posicion = index;
+                sistema.usuarios.splice(posicion, 1);
+                sistema.usuariosBloqueados.push(usuario);
+                UI.imprimirAlerta('Usuario Bloqueado', 'exito', 'resultadoListadoUsuariosAprobados');
+
+                sistema.devolverStock(usuario);
+            }
+        }
+
+        sistema.tablaUsuariosAprobados();
+        sistema.tablaUsuariosBloqueados();
+
+    }
+
+    devolverStock(usuario) {
+
+        UI.limpiarHTML();
+        let posicion = 0;
+        let stockFinal = 0;
+
+        for (let index = 0; index < sistema.maquinasAlquiladas.length; index++) {
+
+            let maquinaAlquilada = sistema.maquinasAlquiladas[index];
+
+            if (maquinaAlquilada.idUsuario === usuario.id) { /** Máquinas alquiladas por el usuario */
+
+                posicion = index;
+                sistema.maquinasAlquiladas.splice(posicion, 1); /** Quitar del arreglo maquinas alquiladas */
+                const maquina = this.maquina(maquinaAlquilada.idMaquina);
+                let stockActual = maquina.stock;
+
+                stockFinal = stockActual + 1;
+                maquina.stock = stockFinal;
+
+                console.log(stockFinal, stockActual);
+            }
+        }
+
+        sistema.tablaMaquinas();
+        sistema.selectMaquina();
+    }
+
+    tablaUsuariosBloqueados() {
+
+        if (sistema.usuariosBloqueados.length > 0) {
+
+            let tabla =
+                `<table>
+                <thead class="heading">
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Nombre de Usuario</th>
+                        <th>Bloqueado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>`;
+
+            for (let usuarioBloqueado of sistema.usuariosBloqueados) {
+
+                const { id, nombre, apellido, nombreUsuario, aprobado, bloqueado } = usuarioBloqueado;
+
+                tabla +=
+                    `<tr>
+                        <td><b>${id}</b></td>
+                        <td>${nombre}</td>
+                        <td>${apellido}</td>
+                        <td>${nombreUsuario}</td>
+                        <td><b>${bloqueado}</b></td>
+                        <td><input type="button" value="Desbloquear" id="btnDesbloquear" data-desbloquear="${id}"</td>
+                    </tr>`
+            }
+
+            tabla +=
+                `</body>
+                </table>`
+
+            document.querySelector('#tablaUsuariosBloqueados').innerHTML = tabla;
+
+        } else {
+
+            const h2 = `<h2 class="descripcion-pagina" style="color: red;">No hay Registros</h2>`;
+            document.querySelector('#tablaUsuariosBloqueados').innerHTML = h2;
+        }
+
+        this.accionDesbloquear();
+    }
+
+    accionDesbloquear() {
+
+        let btnDesbloquear = document.querySelectorAll('#btnDesbloquear');
+
+        for (let boton of btnDesbloquear) {
+
+            boton.addEventListener('click', this.desbloquear);
+        }
+
+    }
+
+    desbloquear() {
+
+        UI.limpiarHTML();
+
+        const idUsuarioBloqueadoBoton = Number(this.getAttribute('data-desbloquear'));
+        let posicion = 0;
+        let index = 0;
+
+        while (index < sistema.usuariosBloqueados.length) {
+
+            let usuarioBloqueado = sistema.usuariosBloqueados[index];
+
+            if (idUsuarioBloqueadoBoton === usuarioBloqueado.id && usuarioBloqueado.bloqueado === true) {
+
+                posicion = index;
+                usuarioBloqueado.bloqueado = false;
+                sistema.usuariosPendientes.unshift(usuarioBloqueado);
+                sistema.usuariosBloqueados.splice(posicion, 1);
+                UI.imprimirAlerta('Usuario Pendientes de Aprobación', 'exito', 'resultadoListadoUsuariosBloqueados');
+            }
+
+            index++;
+        }
+
+        sistema.tablaUsuariosBloqueados();
+        sistema.tablaUsuariosPendientes();
+    }
+
+
 }

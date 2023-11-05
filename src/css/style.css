@@ -187,12 +187,13 @@ section {
     float: left;
 }
 
-#logo {
+.logo {
     padding: 20px;
     float: left;
     width: 20rem;
     height: 15rem;
     float: left;
+
 }
 
 #aux {
@@ -283,6 +284,13 @@ section {
     /* margin: calc(var(--separacion) / 4) 0; */
     /* width: auto;
     margin-bottom: 8rem; */
+
+}
+
+#resultadoListadoUsuariosAprobados {
+
+    display: flex;
+    justify-content: center;
 }
 
 /** Acciones */
@@ -308,6 +316,16 @@ section {
 
 .acciones a:hover {
     color: #c0ca33;
+}
+
+p.alerta.exito {
+
+    display: flex;
+    justify-content: center;
+
+    @media (min-width: 768px) {
+        width: 70rem;
+    }
 }
 
 .alerta {
@@ -456,7 +474,10 @@ button {
     }
 }
 
-#btnApagarPrender, #btnBloquear, #btnAprobar {
+#btnApagarPrender,
+#btnBloquear,
+#btnAprobar,
+#btnDesbloquear {
     width: 100%;
 }
 
