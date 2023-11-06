@@ -793,26 +793,28 @@ class Sistema {
 
         const idUsuarioBotonBloquear = Number(this.getAttribute('data-bloquear'));
 
-        let encontrado = false;
         let posicion = 0;
 
-        for (let index = 0; encontrado === false && index < sistema.usuarios.length; index++) {
+        for (let index = 0; index < sistema.usuarios.length; index++) {
 
             let usuario = sistema.usuarios[index];
 
-            if (usuario.id === idUsuarioBotonBloquear && usuario.bloqueado !== true) {
+            if (usuario.id === idUsuarioBotonBloquear) {
 
-                console.log(usuario);
-                encontrado = true;
+                sistema.devolverStock(usuario);
+
+                sistema.eliminarMaquinasAlquiladas(usuario);
+
                 usuario.bloqueado = true;
                 usuario.aprobado = false;
+
                 posicion = index;
+
                 sistema.usuarios.splice(posicion, 1);
                 sistema.usuariosBloqueados.push(usuario);
                 UI.imprimirAlerta('Usuario Bloqueado', 'exito', 'resultadoListadoUsuariosAprobados');
-
-                sistema.devolverStock(usuario);
             }
+
         }
 
         sistema.tablaUsuariosAprobados();
@@ -822,7 +824,6 @@ class Sistema {
 
     devolverStock(usuario) {
 
-        UI.limpiarHTML();
         let posicion = 0;
         let stockFinal = 0;
 
@@ -832,20 +833,37 @@ class Sistema {
 
             if (maquinaAlquilada.idUsuario === usuario.id) { /** Máquinas alquiladas por el usuario */
 
-                posicion = index;
-                sistema.maquinasAlquiladas.splice(posicion, 1); /** Quitar del arreglo maquinas alquiladas */
                 const maquina = this.maquina(maquinaAlquilada.idMaquina);
+
+                posicion = index;
+
                 let stockActual = maquina.stock;
 
                 stockFinal = stockActual + 1;
                 maquina.stock = stockFinal;
-
-                console.log(stockFinal, stockActual);
             }
         }
-
         sistema.tablaMaquinas();
         sistema.selectMaquina();
+    }
+
+    eliminarMaquinasAlquiladas(usuario) {
+
+        let posicion = 0;
+
+        for (let index = sistema.maquinasAlquiladas.length - 1; index >= 0; index--) {
+
+            let maquinaAlquilada = sistema.maquinasAlquiladas[index];
+
+            console.log(maquinaAlquilada);
+
+            if (maquinaAlquilada.idUsuario === usuario.id) {
+
+                posicion = index;
+                sistema.maquinasAlquiladas.splice(posicion, 1); /** Quitar del arreglo maquinas alquiladas */
+            }
+
+        }
     }
 
     tablaUsuariosBloqueados() {
