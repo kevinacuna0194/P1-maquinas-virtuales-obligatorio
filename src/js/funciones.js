@@ -6,6 +6,7 @@ function ocultarTodo() {
     document.querySelector('#divListadoTotales').style.display = 'none';
     document.querySelector('#divListadoUsuarios').style.display = 'none';
     document.querySelector('#divUsuariosBloqueados').style.display = 'none';
+    document.querySelector('#divModificarStock').style.display = 'none';
 }
 
 function cargarNavegacion() {

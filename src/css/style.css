@@ -324,7 +324,17 @@ p.alerta.exito {
     justify-content: center;
 
     @media (min-width: 768px) {
-        width: 70rem;
+        width: 60rem;
+    }
+}
+
+p.alerta.error {
+
+    display: flex;
+    justify-content: center;
+
+    @media (min-width: 768px) {
+        width: 60rem;
     }
 }
 
@@ -477,7 +487,8 @@ button {
 #btnApagarPrender,
 #btnBloquear,
 #btnAprobar,
-#btnDesbloquear {
+#btnDesbloquear,
+#btnModificarStock {
     width: 100%;
 }
 
@@ -575,4 +586,11 @@ div #bienvenido {
 div #bienvenido .spanBienvenido {
     font-weight: var(--bold);
     color: var(--azulOscuro);
+}
+
+.txtModificarStock {
+
+    margin: 1rem 0;
+    padding: 0.5rem;
+    width: 100%;
 }

@@ -395,7 +395,10 @@ class Sistema {
                 this.selectMaquina();
                 /** Actualizar tabla **/
                 this.tablaMaquinas();
+
                 this.tablaCostosTotales();
+
+                this.tablaModificarStock();
 
                 UI.imprimirAlerta(`Instancia Alquilada: <b><u>${nombre}</u></b>`, 'exito', 'resultadoFormMaquina');
 
@@ -953,5 +956,149 @@ class Sistema {
         sistema.tablaUsuariosPendientes();
     }
 
+    tablaModificarStock() {
 
+        const nombreUsuario = sistema.logueado.nombreUsuario;
+        const tipoUsuario = this.tipoUsuario(nombreUsuario);
+
+        if (sistema.maquina.length > 0) {
+
+            let tabla =
+                `<table>
+                <thead class="heading">
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Tipo de Instancia</th>
+                        <th>Stock</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>`;
+
+            for (let index = 0; index < this.maquinas.length; index++) {
+
+                let maquinas = this.maquinas[index];
+
+                if (tipoUsuario === 'administrador') {
+
+                    const { idMaquina, nombre, tipo, stock } = maquinas;
+
+                    tabla +=
+                        `<tr>
+                        <td>${nombre}</td>
+                        <td>${tipo}</td>
+                        <td><b>${stock}</b></td>
+                        <td>
+                            <input type"text" id="txt${idMaquina}" class="txtModificarStock" placeholder="Ingrese un valor">
+                            <input type="button" value="Modificar Stock" id="btnModificarStock" data-maquina="${idMaquina}">
+                        </td>
+                    </tr>`
+
+                }
+            }
+
+            tabla +=
+                `</body>
+                </table>`
+
+            document.querySelector('#tablaModificarStock').innerHTML = tabla;
+
+            this.accionModificarStock();
+
+        } else {
+
+            const h2 = `<h2 class="descripcion-pagina" style="color: red;">No hay Registros</h2>`;
+            document.querySelector('#tablaModificarStock').innerHTML = h2;
+        }
+    }
+
+    accionModificarStock() {
+
+        let btnModificarStock = document.querySelectorAll('#btnModificarStock');
+
+        for (let boton of btnModificarStock) {
+
+            boton.addEventListener('click', this.modificarStock);
+        }
+    }
+
+    modificarStock() {
+
+        UI.limpiarHTML();
+        
+        /** ID maquina Boton */
+        const idMaquina = Number(this.getAttribute('data-maquina'));
+
+        /** Cantidad ingresada en campo de texto */
+        const cantidadAModificar = Number(document.querySelector(`#txt${idMaquina}`).value.trim());
+
+        /** Maquina con alquiler */
+        const maquina = sistema.maquina(idMaquina);
+
+        let vecesAqluilada = 0;
+
+        for (let index = 0; index < sistema.maquinasAlquiladas.length; index++) {
+
+            let maquinasAlquiladas = sistema.maquinasAlquiladas[index];
+
+            if (maquinasAlquiladas.idMaquina === idMaquina) {
+
+                vecesAqluilada++;
+            }
+        }
+
+        if (cantidadAModificar > 0) {
+
+            if (cantidadAModificar > vecesAqluilada) {
+
+                maquina.stock = cantidadAModificar;
+
+                UI.imprimirAlerta('Stock Modificado con éxito', 'exito', 'resultadoModificarStock');
+
+            } else {
+
+                UI.imprimirAlerta('Cantidad a Modificar no Puede ser Menor que las Máquinas Alquiladas', 'error', 'resultadoModificarStock');
+            }
+
+        } else {
+
+            UI.imprimirAlerta('Valor a modificar no Puede estra Vacio', 'error', 'resultadoModificarStock');
+            
+        }
+
+        sistema.tablaModificarStock();
+    }
+
+    // vecesAlquilada(maquinaConAlquiler) {
+
+    //     const { idMaquina } = maquinaConAlquiler;
+
+    //     let vecesAqluilada = 0;
+
+    //     for(let index = 0; index < this.maquinasAlquiladas.length; index++) {
+
+    //         let maquinasAlquiladas = sistema.maquinasAlquiladas[index];
+
+    //         if (maquinasAlquiladas.idMaquina === idMaquina) {
+
+    //             vecesAqluilada++;
+
+    //         }
+    //     }
+
+    //     return vecesAqluilada;
+    // }
+
+    maquinas() {
+
+        let maquinas = [];
+
+        for (let maquina of sistema.maquinas) {
+
+            maquinas += maquina;
+            console.log(maquinas);
+        }
+
+        return maquinas;
+    }
 }

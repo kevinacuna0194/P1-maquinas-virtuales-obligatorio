@@ -69,6 +69,10 @@ function login() {
 
                     sistema.tablaUsuariosAprobados();
 
+                    sistema.tablaUsuariosBloqueados();
+
+                    sistema.tablaModificarStock();
+
                 }, 1000);
 
             } else {
