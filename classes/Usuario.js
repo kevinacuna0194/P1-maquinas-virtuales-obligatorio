@@ -118,7 +118,7 @@ class Usuario {
     }
 
     validarNombreUsuario(nombreUsuario, idDiv) {
-
+        
         UI.limpiarHTML();
 
         /** Nombre de usuario: formato string alfanumérico, case insensitive. A modo de ejemplo: martin.luz01 */
@@ -247,7 +247,7 @@ class Usuario {
         return true;
     }
 
-    validarUsuario(nombre, apellido, nombreUsuario, password, numeroTarjeta, cvc) {
+    validarUsuario(nombreUsuario, password) {
 
         return usuario.validarNombreUsuario(nombreUsuario) && usuario.validarPassword(password);
     }

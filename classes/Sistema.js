@@ -245,7 +245,7 @@ class Sistema {
 
         const { nombre, apellido, nombreUsuario, password, numeroTarjeta, cvc } = object;
 
-        if (usuario.validarUsuario(nombre, apellido, nombreUsuario, password, numeroTarjeta, cvc)) {
+        if (usuario.validarUsuario(nombreUsuario, password)) {
 
             if (object.aprobado === true) {
 
@@ -269,25 +269,69 @@ class Sistema {
         return agregado;
     }
 
-    login(nombreUsuario, password) {
+    nuevoRegistro(nombre, apellido, nombreUsuario, password, numeroTarjeta, cvc) {
 
-        UI.limpiarHTML();
+        if (usuario.validarUsuario(nombreUsuario, password)) {
+
+            for (let usuarios of this.usuarios) {
+
+                if (usuarios.nombreUsuario === nombreUsuario) {
+
+                    UI.imprimirAlerta('Usuario ya existe. Aprobado por Administrador', 'error', 'resultadoFormReg');
+                    return;
+                }
+            }
+
+            for (let usuarios of this.usuariosPendientes) {
+
+                if (usuarios.nombreUsuario === nombreUsuario) {
+
+                    UI.imprimirAlerta('Usuario ya existe. Pendinete de aprobación', 'error', 'resultadoFormReg');
+                    return;
+                }
+            }
+
+            const usuario = new Usuario(nombre, apellido, nombreUsuario, password, numeroTarjeta, cvc);
+            this.usuariosPendientes.push(usuario);
+
+            return true;
+        }
+    }
+
+    login(nombreUsuario, password) {
 
         let encontrado = false;
 
         let usuario = this.obtenerUsuario(nombreUsuario); /** retorna objeto de usuario encontrado sino default null */
 
-        if (usuario !== null) {
+        if (usuario !== null && usuario.aprobado !== false) {
 
             if (usuario.password === password) {
 
                 encontrado = true;
                 this.logueado = usuario;
+                document.querySelector('#formLogin').reset();
+                return encontrado;
             }
+
         }
 
-        document.querySelector('#formLogin').reset();
-        return encontrado;
+        if (usuario !== null && usuario.aprobado === false) {
+
+            UI.limpiarHTML();
+
+            UI.imprimirAlerta('Usuario pendiente de Aprobación', 'error', 'resultadoLogin');
+
+            return;
+
+        } 
+        
+        if (usuario === null) {
+
+            UI.imprimirAlerta('Nombre de Usario o Contraseña incorrectos', 'error', 'resultadoLogin');
+
+            return;
+        }
     }
 
     obtenerUsuario(nombreUsuario) {
@@ -309,6 +353,16 @@ class Sistema {
 
             if (nombreUsuario === administrador.nombreUsuario) {
                 existe = administrador;
+            }
+        }
+
+        for (let index = 0; existe === null && index < this.usuariosPendientes.length; index++) {
+
+            let usuarioPendiente = this.usuariosPendientes[index];
+
+            if (nombreUsuario === usuarioPendiente.nombreUsuario) {
+
+                existe = usuarioPendiente;
             }
         }
 
@@ -603,13 +657,17 @@ class Sistema {
 
     /** Administrador **/
     agregarAdministrador(object) {
-
+        
         const { nombre, nombreUsuario, password } = object;
 
-        const administrador = new Administrador(nombre, nombreUsuario, password);
+        if (usuario.validarUsuario(nombreUsuario, password)) {
 
-        // this.administradores = [...this.administradores, administrador];
-        this.administradores.push(administrador);
+            const administrador = new Administrador(nombre, nombreUsuario, password);
+    
+            // this.administradores = [...this.administradores, administrador];
+            this.administradores.push(administrador);
+        }
+
     }
 
     tipoUsuario(nombreUsuario) {
@@ -970,6 +1028,7 @@ class Sistema {
                         <th>Nombre</th>
                         <th>Tipo de Instancia</th>
                         <th>Stock</th>
+                        <th>Veces Alquilada</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -983,11 +1042,14 @@ class Sistema {
 
                     const { idMaquina, nombre, tipo, stock } = maquinas;
 
+                    const vecesAqluilada = sistema.vecesAlquilada(idMaquina);
+
                     tabla +=
                         `<tr>
                         <td>${nombre}</td>
                         <td>${tipo}</td>
                         <td><b>${stock}</b></td>
+                        <td><b>${vecesAqluilada}</b></td>
                         <td>
                             <input type"text" id="txt${idMaquina}" class="txtModificarStock" placeholder="Ingrese un valor">
                             <input type="button" value="Modificar Stock" id="btnModificarStock" data-maquina="${idMaquina}">
@@ -1025,7 +1087,7 @@ class Sistema {
     modificarStock() {
 
         UI.limpiarHTML();
-        
+
         /** ID maquina Boton */
         const idMaquina = Number(this.getAttribute('data-maquina'));
 
@@ -1035,17 +1097,8 @@ class Sistema {
         /** Maquina con alquiler */
         const maquina = sistema.maquina(idMaquina);
 
-        let vecesAqluilada = 0;
-
-        for (let index = 0; index < sistema.maquinasAlquiladas.length; index++) {
-
-            let maquinasAlquiladas = sistema.maquinasAlquiladas[index];
-
-            if (maquinasAlquiladas.idMaquina === idMaquina) {
-
-                vecesAqluilada++;
-            }
-        }
+        // let vecesAqluilada = 0;
+        const vecesAqluilada = sistema.vecesAlquilada(idMaquina);
 
         if (cantidadAModificar > 0) {
 
@@ -1057,48 +1110,33 @@ class Sistema {
 
             } else {
 
-                UI.imprimirAlerta('Cantidad a Modificar no Puede ser Menor que las Máquinas Alquiladas', 'error', 'resultadoModificarStock');
+                UI.imprimirAlerta('Cantidad a Modificar no Puede ser Menor o Igual a las Máquinas Alquiladas', 'error', 'resultadoModificarStock');
             }
 
         } else {
 
             UI.imprimirAlerta('Valor a modificar no Puede estra Vacio', 'error', 'resultadoModificarStock');
-            
+
         }
 
         sistema.tablaModificarStock();
     }
 
-    // vecesAlquilada(maquinaConAlquiler) {
+    vecesAlquilada(idMaquina) {
 
-    //     const { idMaquina } = maquinaConAlquiler;
+        let vecesAqluilada = 0;
 
-    //     let vecesAqluilada = 0;
+        for(let index = 0; index < this.maquinasAlquiladas.length; index++) {
 
-    //     for(let index = 0; index < this.maquinasAlquiladas.length; index++) {
+            let maquinasAlquiladas = sistema.maquinasAlquiladas[index];
 
-    //         let maquinasAlquiladas = sistema.maquinasAlquiladas[index];
+            if (maquinasAlquiladas.idMaquina === idMaquina) {
 
-    //         if (maquinasAlquiladas.idMaquina === idMaquina) {
+                vecesAqluilada++;
 
-    //             vecesAqluilada++;
-
-    //         }
-    //     }
-
-    //     return vecesAqluilada;
-    // }
-
-    maquinas() {
-
-        let maquinas = [];
-
-        for (let maquina of sistema.maquinas) {
-
-            maquinas += maquina;
-            console.log(maquinas);
+            }
         }
 
-        return maquinas;
+        return vecesAqluilada;
     }
 }

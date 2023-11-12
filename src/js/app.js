@@ -75,15 +75,14 @@ function login() {
 
                 }, 1000);
 
-            } else {
-
-                UI.imprimirAlerta('Nombre de Usario o Contraseña incorrectos', 'error', 'resultadoLogin');
             }
         }
     }
 }
 
 function registrarse() {
+
+    UI.limpiarHTML();
 
     const nombre = document.querySelector('#nombre').value.trim();
     const apellido = document.querySelector('#apellido').value.trim();
@@ -108,7 +107,7 @@ function registrarse() {
 
                             cvc = Number(cvc);
 
-                            if (sistema.agregarUsuario(nombre, apellido, nombreUsuario, password, numeroTarjeta, cvc)) {
+                            if (sistema.nuevoRegistro(nombre, apellido, nombreUsuario, password, numeroTarjeta, cvc)) {
 
                                 UI.imprimirAlerta('Usuario Agregado Correctamente', 'exito', 'resultadoFormReg');
 
@@ -119,11 +118,8 @@ function registrarse() {
                                     ocultarTodo();
                                     document.querySelector('#divLogin').style.display = 'block';
 
-                                }, 3000);
+                                }, 1000);
 
-                            } else {
-
-                                UI.imprimirAlerta('Error al registrar el usuario', 'error', 'resultadoFormReg');
                             }
 
                         }

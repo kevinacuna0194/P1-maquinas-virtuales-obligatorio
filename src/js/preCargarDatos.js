@@ -13,11 +13,7 @@ function preCargarDatosUsuario() {
 
     sistema.agregarUsuario(usuario1); /** Retorna true si se agrega correctamente */
 
-    if (sistema.agregarUsuario) { /** retorna true o false */
-
-        // UI.imprimirAlerta(`Usuario Agregado Correctamente: ${nombreUsuario}`, 'exito');
-
-    } else {
+    if (sistema.agregarUsuario === false) { /** retorna true o false */
 
         UI.imprimirAlerta(`Error al agregar el Usuario: ${nombreUsuario}`, 'error');
     }
@@ -101,7 +97,7 @@ function preCargarDatosMaquina() {
 
 function preCargarAdministrador() {
 
-    
+
 
     const administrador1 = {
         nombre: 'administrador1',

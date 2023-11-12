@@ -14,9 +14,9 @@ class UI extends Sistema {
         
         document.querySelector(`#${idDiv}`).appendChild(parrafo);
         
-        // setTimeout(() => {
-        //     parrafo.remove();
-        // }, 2000);
+        setTimeout(() => {
+            parrafo.remove();
+        }, 2000);
     }
 
     static limpiarHTML() {
