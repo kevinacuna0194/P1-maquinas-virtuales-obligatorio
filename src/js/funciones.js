@@ -7,6 +7,7 @@ function ocultarTodo() {
     document.querySelector('#divListadoUsuarios').style.display = 'none';
     document.querySelector('#divUsuariosBloqueados').style.display = 'none';
     document.querySelector('#divModificarStock').style.display = 'none';
+    document.querySelector('#divInformeMaquinas').style.display = 'none';
 }
 
 function cargarNavegacion() {

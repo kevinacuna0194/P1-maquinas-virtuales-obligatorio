@@ -73,6 +73,8 @@ function login() {
 
                     sistema.tablaModificarStock();
 
+                    sistema.tablaInformeMaquinas();
+
                 }, 1000);
 
             }

@@ -324,8 +324,8 @@ class Sistema {
 
             return;
 
-        } 
-        
+        }
+
         if (usuario === null) {
 
             UI.imprimirAlerta('Nombre de Usario o Contraseña incorrectos', 'error', 'resultadoLogin');
@@ -554,13 +554,14 @@ class Sistema {
     cambiarEstado() {
 
         const idAlquilerBoton = Number(this.getAttribute("data-alquiler"));
-
         const maquinaAlquilada = sistema.maquinaAlquilada(idAlquilerBoton);
+
+        let vecesIniciada = 0;
 
         if (maquinaAlquilada !== null) {
 
             const nuevoEstado = sistema.estadoMaquina(maquinaAlquilada);
-
+            const maquina = null;
             maquinaAlquilada.estado = nuevoEstado;
 
             if (maquinaAlquilada.estado === 'ON') {
@@ -571,6 +572,7 @@ class Sistema {
 
             sistema.tablaMaquinas();
             sistema.tablaCostosTotales();
+            sistema.tablaInformeMaquinas();
         }
     }
 
@@ -657,13 +659,13 @@ class Sistema {
 
     /** Administrador **/
     agregarAdministrador(object) {
-        
+
         const { nombre, nombreUsuario, password } = object;
 
         if (usuario.validarUsuario(nombreUsuario, password)) {
 
             const administrador = new Administrador(nombre, nombreUsuario, password);
-    
+
             // this.administradores = [...this.administradores, administrador];
             this.administradores.push(administrador);
         }
@@ -880,7 +882,10 @@ class Sistema {
 
         sistema.tablaUsuariosAprobados();
         sistema.tablaUsuariosBloqueados();
-
+        sistema.selectMaquina();
+        sistema.tablaCostosTotales();
+        sistema.tablaModificarStock();
+        sistema.tablaInformeMaquinas();
     }
 
     devolverStock(usuario) {
@@ -904,8 +909,6 @@ class Sistema {
                 maquina.stock = stockFinal;
             }
         }
-        sistema.tablaMaquinas();
-        sistema.selectMaquina();
     }
 
     eliminarMaquinasAlquiladas(usuario) {
@@ -915,8 +918,6 @@ class Sistema {
         for (let index = sistema.maquinasAlquiladas.length - 1; index >= 0; index--) {
 
             let maquinaAlquilada = sistema.maquinasAlquiladas[index];
-
-            console.log(maquinaAlquilada);
 
             if (maquinaAlquilada.idUsuario === usuario.id) {
 
@@ -1120,13 +1121,14 @@ class Sistema {
         }
 
         sistema.tablaModificarStock();
+        sistema.tablaInformeMaquinas();
     }
 
     vecesAlquilada(idMaquina) {
 
         let vecesAqluilada = 0;
 
-        for(let index = 0; index < this.maquinasAlquiladas.length; index++) {
+        for (let index = 0; index < this.maquinasAlquiladas.length; index++) {
 
             let maquinasAlquiladas = sistema.maquinasAlquiladas[index];
 
@@ -1138,5 +1140,105 @@ class Sistema {
         }
 
         return vecesAqluilada;
+    }
+
+    tablaInformeMaquinas() {
+
+        const nombreUsuario = sistema.logueado.nombreUsuario;
+        const tipoUsuario = this.tipoUsuario(nombreUsuario);
+
+        if (sistema.maquina.length > 0) {
+
+            let tabla =
+                `<table>
+                <thead class="heading">
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Tipo de Instancia</th>
+                        <th>Costo Alquiler</th>
+                        <th>Costo por Encendido</th>
+                        <th>Total Veces Encendidas</th>
+                        <th>Total veces Alquilada</th>
+                        <th>Stock</th>
+                        <th>Ingreso Total</th>
+                    </tr>
+                </thead>
+                <tbody>`;
+
+            for (let index = 0; index < this.maquinas.length; index++) {
+
+                let maquina = this.maquinas[index];
+
+                if (tipoUsuario === 'administrador') {
+
+                    const { idMaquina, nombre, tipo, costoAlquiler, costoEncendido, stock } = maquina;
+
+                    const vecesAqluilada = sistema.vecesAlquilada(idMaquina);
+                    const vecesIniciada = sistema.vecesIniciada(idMaquina);
+                    const ingresoTotal = sistema.ingresoTotal(idMaquina);
+                    
+
+                    tabla +=
+                        `<tr>
+                        <td>${nombre}</td>
+                        <td>${tipo}</td>
+                        <td><b>${costoAlquiler}</b></td>
+                        <td><b>${costoEncendido}</b></td>
+                        <td><b>${vecesIniciada}</b></td>
+                        <td><b>${vecesAqluilada}</b></td>
+                        <td><b>${stock}</b></td>
+                        <td><b>${ingresoTotal}</b></td>
+                    </tr>`;
+
+                }
+            }
+
+            tabla +=
+                `</body>
+                </table>`;
+
+            document.querySelector('#tablaInformeMaquinas').innerHTML = tabla;
+
+            this.accionModificarStock();
+
+        } else {
+
+            const h2 = `<h2 class="descripcion-pagina" style="color: red;">No hay Registros</h2>`;
+            document.querySelector('#tablaInformeMaquinas').innerHTML = h2;
+        }
+    }
+
+    vecesIniciada(idMaquina) {
+
+        let vecesIniciada = 0;
+
+        for (let maquinaAlquilada of sistema.maquinasAlquiladas) {
+
+            if (maquinaAlquilada.idMaquina === idMaquina) {
+
+                vecesIniciada += maquinaAlquilada.iniciada;
+            }
+        }
+
+        return vecesIniciada;
+    }
+
+    ingresoTotal(idMaquina) {
+
+        let ingresoTotal = 0;
+
+        for (let maquinaAlquilada of sistema.maquinasAlquiladas) {
+
+            if (maquinaAlquilada.idMaquina === idMaquina) {
+
+                const { iniciada, costoAlquiler, costoEncendido } = maquinaAlquilada;
+
+                let total = (costoEncendido * iniciada) + costoAlquiler;
+                ingresoTotal += total;
+
+            }
+        }
+        
+        return ingresoTotal;
     }
 }
