@@ -14,7 +14,7 @@ IA.
 <p align="center" font-weight="bold">
       <img src="https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E">
       <br>
-      <img src="https://img.shields.io/badge/ESTADO-EN%20DESARROLLO-informational?style=social">
+      <img src="https://img.shields.io/badge/ESTADO-COMPLETADO-informational?style=social&logo=javascript">
 </p>
 
 :zap::octocat::zap:
