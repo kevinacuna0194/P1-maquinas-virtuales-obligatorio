@@ -18,6 +18,7 @@ function obligatorio() {
 const sistema = new Sistema();
 const usuario = new Usuario();
 const maquina = new Maquina();
+const ui = new UI();
 
 ocultarTodo(); /** Ocultar todo el contenido HTML */
 cargarNavegacion();
@@ -34,6 +35,7 @@ preCargarDatosUsuario();
 preCargarDatosMaquina();
 preCargarAdministrador();
 preCargarUsuariosPendientes();
+preCargarAlquiler();
 
 
 /** Funciones */
@@ -59,21 +61,23 @@ function login() {
                     /** Ocultar Login */
                     document.querySelector("#divLogin").style.display = "none";
 
-                    sistema.selectMaquina();
+                    ui.selectMaquina();
 
-                    sistema.tablaMaquinas();
+                    ui.tablaMaquinas();
 
-                    sistema.tablaCostosTotales()
+                    ui.tablaCostosTotales()
 
-                    sistema.tablaUsuariosPendientes();
+                    ui.tablaUsuariosPendientes();
 
-                    sistema.tablaUsuariosAprobados();
+                    ui.tablaUsuariosAprobados();
 
-                    sistema.tablaUsuariosBloqueados();
+                    ui.tablaUsuariosBloqueados();
 
-                    sistema.tablaModificarStock();
+                    ui.tablaModificarStock();
 
-                    sistema.tablaInformeMaquinas();
+                    ui.tablaInformeMaquinas();
+
+                    cerrarSesion();
 
                 }, 1000);
 

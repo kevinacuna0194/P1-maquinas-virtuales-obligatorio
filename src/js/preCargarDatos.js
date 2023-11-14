@@ -166,3 +166,137 @@ function preCargarUsuariosPendientes() {
     sistema.agregarUsuario(usuario4);
     sistema.agregarUsuario(usuario5);
 }
+
+function preCargarAlquiler() {
+
+    const alquiler1 = {
+
+        idUsuario: 1,
+        idMaquina: 1,
+        nombre: 'c7.small',
+        tipo: 'Optimizadas para computo',
+        estado: 'ON',
+        iniciada: 0,
+        costoAlquiler: 20,
+        costoEncendido: 2.50
+    }
+
+    const alquiler2 = {
+
+        idUsuario: 1,
+        idMaquina: 2,
+        nombre: 'c7.medium',
+        tipo: 'Optimizadas para computo',
+        estado: 'ON',
+        iniciada: 0,
+        costoAlquiler: 30,
+        costoEncendido: 3.50
+    }
+
+    const alquiler3 = {
+
+        idUsuario: 1,
+        idMaquina: 3,
+        nombre: 'c7.large',
+        tipo: 'Optimizadas para computo',
+        estado: 'ON',
+        iniciada: 0,
+        costoAlquiler: 50,
+        costoEncendido: 6
+  }
+
+    const alquiler4 = {
+
+        idUsuario: 1,
+        idMaquina: 4,
+        nombre: 'r7.small',
+        tipo: 'Optimizadas para memoria',
+        estado: 'ON',
+        iniciada: 0,
+        costoAlquiler: 35,
+        costoEncendido: 4
+    }
+
+    const alquiler5 = {
+
+        idUsuario: 1,
+        idMaquina: 5,
+        nombre: 'r7.medium',
+        tipo: 'Optimizadas para memoria',
+        estado: 'ON',
+        iniciada: 0,
+        costoAlquiler: 50,
+        costoEncendido: 6.50
+    }
+
+    const alquiler6 = {
+
+        idUsuario: 1,
+        idMaquina: 6,
+        nombre: 'r7.large',
+        tipo: 'Optimizadas para memoria',
+        estado: 'ON',
+        iniciada: 0,
+        costoAlquiler: 60,
+        costoEncendido: 7
+    }
+
+    const alquiler7 = {
+
+        idUsuario: 1,
+        idMaquina: 7,
+        nombre: 'i7.medium',
+        tipo: 'Optimizadas para almacenamiento',
+        estado: 'ON',
+        iniciada: 0,
+        costoAlquiler: 30,
+        costoEncendido: 3.50
+    }
+
+    const alquiler8 = {
+
+        idUsuario: 1,
+        idMaquina: 8,
+        nombre: 'c7.small',
+        tipo: 'Optimizadas para almacenamiento',
+        estado: 'ON',
+        iniciada: 0,
+        costoAlquiler: 50,
+        costoEncendido: 6.50
+    }
+
+    const alquiler9 = {
+
+        idUsuario: 1,
+        idMaquina: 1,
+        nombre: 'c7.small',
+        tipo: 'Optimizadas para computo',
+        estado: 'ON',
+        iniciada: 0,
+        costoAlquiler: 20,
+        costoEncendido: 2.50
+    }
+
+    const alquiler10 = {
+
+        idUsuario: 1,
+        idMaquina: 2,
+        nombre: 'c7.medium',
+        tipo: 'Optimizadas para computo',
+        estado: 'ON',
+        iniciada: 0,
+        costoAlquiler: 30,
+        costoEncendido: 3.50
+    }
+
+    sistema.agregarAlquiler(alquiler1);
+    sistema.agregarAlquiler(alquiler2);
+    sistema.agregarAlquiler(alquiler3);
+    sistema.agregarAlquiler(alquiler4);
+    sistema.agregarAlquiler(alquiler5);
+    sistema.agregarAlquiler(alquiler6);
+    sistema.agregarAlquiler(alquiler7);
+    sistema.agregarAlquiler(alquiler8);
+    sistema.agregarAlquiler(alquiler9);
+    sistema.agregarAlquiler(alquiler10);
+}

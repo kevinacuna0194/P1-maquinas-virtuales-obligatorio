@@ -108,5 +108,15 @@ function mostrarEnlace(nombreUsuario) {
         document.querySelector('#enlaceLogin').style.display = 'block';
         document.querySelector('#enlaceRegistrarse').style.display = 'block';
     }
+}
 
+function cerrarSesion() {
+
+    document.querySelector('#cerrarSesion').addEventListener('click', () => {
+
+        sistema.logueado = null;
+        mostrarEnlace();
+        cargarNavegacion();
+        UI.limpiarBienvenida();
+    });
 }

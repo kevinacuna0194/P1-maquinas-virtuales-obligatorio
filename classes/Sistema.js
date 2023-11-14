@@ -446,13 +446,13 @@ class Sistema {
                 // this.maquinasAlquiladas = [...this.maquinasAlquiladas, alquilada];
                 this.maquinasAlquiladas.push(alquiler);
 
-                this.selectMaquina();
+                ui.selectMaquina();
                 /** Actualizar tabla **/
-                this.tablaMaquinas();
+                ui.tablaMaquinas();
 
-                this.tablaCostosTotales();
+                ui.tablaCostosTotales();
 
-                this.tablaModificarStock();
+                ui.tablaModificarStock();
 
                 UI.imprimirAlerta(`Instancia Alquilada: <b><u>${nombre}</u></b>`, 'exito', 'resultadoFormMaquina');
 
@@ -462,79 +462,6 @@ class Sistema {
             }
         }
     }
-
-    selectMaquina() {
-
-        let select = `
-        <select id="maquina">
-            <option value="">--Seleccione--</option>
-        `;
-
-        for (let maquina of this.maquinas) {
-
-            const { idMaquina, nombre, tipo, costoAlquiler, costoEncendido, stock } = maquina;
-
-            select += `<option value="${idMaquina}">Nombre: ${nombre} Tipo: ${tipo} Costo: ${costoAlquiler} Costo Encendido: ${costoEncendido} Stock: ${stock}</option>`;
-        }
-
-        select += `</select>`;
-
-        document.querySelector('#selectMaquina').innerHTML = select;
-    }
-
-    tablaMaquinas() {
-
-        if (sistema.maquinasAlquiladas.length > 0) {
-
-            const idUsuario = this.logueado.id;
-
-            let tabla =
-                `<table>
-                <thead class="heading">
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Tipo de Instancia</th>
-                        <th>Estado</th>
-                        <th>Veces Iniciada</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>`;
-
-            for (let maquinasAlquiladas of sistema.maquinasAlquiladas) {
-
-                if (maquinasAlquiladas.idUsuario === idUsuario) {
-
-                    const { idAlquiler, nombre, tipo, estado, iniciada } = maquinasAlquiladas;
-
-                    tabla +=
-                        `<tr>
-                        <td>${nombre}</td>
-                        <td>${tipo}</td>
-                        <td><b>${estado}</b></td>
-                        <td><b>${iniciada}</b></td>
-                        <td><input type="button" value="ON / OFF" id="btnApagarPrender" data-alquiler="${idAlquiler}"></td>
-                    </tr>`
-
-                }
-            }
-
-            tabla +=
-                `</body>
-                </table>`
-
-            document.querySelector('#tablaMaquinas').innerHTML = tabla;
-
-        } else {
-
-            const h2 = `<h2 class="descripcion-pagina" style="color: red;">No hay Registros</h2>`;
-            document.querySelector('#tablaMaquinas').innerHTML = h2;
-        }
-
-        /** Permitir funcionalidad al boton apagar */
-        this.accionesTabla();
-    }
-
 
     accionesTabla() {
 
@@ -570,9 +497,9 @@ class Sistema {
                 maquinaAlquilada.iniciada = iniciada;
             }
 
-            sistema.tablaMaquinas();
-            sistema.tablaCostosTotales();
-            sistema.tablaInformeMaquinas();
+            ui.tablaMaquinas();
+            ui.tablaCostosTotales();
+            ui.tablaInformeMaquinas();
         }
     }
 
@@ -590,60 +517,6 @@ class Sistema {
         }
 
         return estado;
-    }
-
-    tablaCostosTotales() {
-
-        if (sistema.maquinasAlquiladas.length > 0) {
-
-            const idUsuario = this.logueado.id;
-
-            let tabla =
-                `<table>
-                <thead class="heading">
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Tipo de Instancia</th>
-                        <th>Costo Alquiler</th>
-                        <th>Costo por encendido</th>
-                        <th>Total de veces encendidas</th>
-                        <th>Costo total</th>
-                    </tr>
-                </thead>
-                <tbody>`;
-
-            for (let maquinaAlquilada of sistema.maquinasAlquiladas) {
-
-                if (maquinaAlquilada.idUsuario === idUsuario) {
-
-                    /** calcular y retornar total */
-                    const costoTotal = this.costoTotal(maquinaAlquilada);
-
-                    const { nombre, tipo, costoAlquiler, costoEncendido, iniciada } = maquinaAlquilada;
-
-                    tabla +=
-                        `<tr>
-                        <td>${nombre}</td>
-                        <td>${tipo}</td>
-                        <td>${costoAlquiler}</td>
-                        <td>${costoEncendido}</td>
-                        <td><b>${iniciada}</b></td>
-                        <td><b>${costoTotal}</b></td>
-                    </tr>`
-                }
-            }
-
-            tabla +=
-                `</body>
-                </table>`
-
-            document.querySelector('#tablaCostoTotalAlquiler').innerHTML = tabla;
-
-        } else {
-
-            const h2 = `<h2 class="descripcion-pagina" style="color: red;">No hay Registros</h2>`;
-            document.querySelector('#tablaCostoTotalAlquiler').innerHTML = h2;
-        }
     }
 
     costoTotal(maquina) {
@@ -697,105 +570,6 @@ class Sistema {
         return tipoUsuario;
     }
 
-    tablaUsuariosAprobados() {
-
-        if (this.usuarios.length > 0) {
-
-            let tabla =
-                `<table>
-                <thead class="heading">
-                    <tr>
-                        <th>ID</th>
-                        <th>Nombre</th>
-                        <th>Apellido</th>
-                        <th>Nombre de Usuario</th>
-                        <th>Aprobado</th>
-                        <th>Bloqueado</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>`;
-
-            for (let usuarioAprobado of sistema.usuarios) {
-
-                const { id, nombre, apellido, nombreUsuario, aprobado, bloqueado } = usuarioAprobado;
-
-                tabla +=
-                    `<tr>
-                        <td><b>${id}</b></td>
-                        <td>${nombre}</td>
-                        <td>${apellido}</td>
-                        <td>${nombreUsuario}</td>
-                        <td><b>${aprobado}</b></td>
-                        <td><b>${bloqueado}</b></td>
-                        <td><input type="button" value="Bloquear" id="btnBloquear" data-bloquear="${id}"</td>
-                    </tr>`
-            }
-
-            tabla +=
-                `</body>
-                </table>`
-
-            document.querySelector('#tablaListadoUsuariosAprobados').innerHTML = tabla;
-
-            this.accionBloquear();
-
-        } else {
-
-            const h2 = `<h2 class="descripcion-pagina" style="color: red;">No hay Registros</h2>`;
-            document.querySelector('#tablaListadoUsuariosAprobados').innerHTML = h2;
-        }
-
-    }
-
-    tablaUsuariosPendientes() {
-
-        if (this.usuariosPendientes.length > 0) {
-
-            let tabla =
-                `<table>
-                <thead class="heading">
-                    <tr>
-                        <th>ID</th>
-                        <th>Nombre</th>
-                        <th>Apellido</th>
-                        <th>Nombre de Usuario</th>
-                        <th>Aprobado</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>`;
-
-            for (let usuarioPendiente of sistema.usuariosPendientes) {
-
-                const { id, nombre, apellido, nombreUsuario, aprobado } = usuarioPendiente;
-
-                tabla +=
-                    `<tr>
-                        <td><b>${id}</b></td>
-                        <td>${nombre}</td>
-                        <td>${apellido}</td>
-                        <td>${nombreUsuario}</td>
-                        <td><b>${aprobado}</b></td>
-                        <td><input type="button" value="Aprobar" id="btnAprobar" data-aprobar="${id}"</td>
-                    </tr>`
-            }
-
-            tabla +=
-                `</body>
-                </table>`
-
-            document.querySelector('#tablaListadoUsuariosPendientes').innerHTML = tabla;
-
-            this.accionAprobar();
-
-        } else {
-
-            const h2 = `<h2 class="descripcion-pagina" style="color: red;">No hay Registros</h2>`;
-            document.querySelector('#tablaListadoUsuariosPendientes').innerHTML = h2;
-        }
-    }
-
     accionAprobar() {
 
         if (this.usuariosPendientes.length !== 0) {
@@ -833,8 +607,8 @@ class Sistema {
         sistema.usuariosPendientes.splice(posicion, 1);
         UI.imprimirAlerta('Usuario Aprobado', 'exito', 'resultadoListadoUsuariosPendientes')
 
-        sistema.tablaUsuariosAprobados();
-        sistema.tablaUsuariosPendientes();
+        ui.tablaUsuariosAprobados();
+        ui.tablaUsuariosPendientes();
     }
 
     accionBloquear() {
@@ -880,12 +654,12 @@ class Sistema {
 
         }
 
-        sistema.tablaUsuariosAprobados();
-        sistema.tablaUsuariosBloqueados();
-        sistema.selectMaquina();
-        sistema.tablaCostosTotales();
-        sistema.tablaModificarStock();
-        sistema.tablaInformeMaquinas();
+        ui.tablaUsuariosAprobados();
+        ui.tablaUsuariosBloqueados();
+        ui.selectMaquina();
+        ui.tablaCostosTotales();
+        ui.tablaModificarStock();
+        ui.tablaInformeMaquinas();
     }
 
     devolverStock(usuario) {
@@ -928,54 +702,6 @@ class Sistema {
         }
     }
 
-    tablaUsuariosBloqueados() {
-
-        if (sistema.usuariosBloqueados.length > 0) {
-
-            let tabla =
-                `<table>
-                <thead class="heading">
-                    <tr>
-                        <th>ID</th>
-                        <th>Nombre</th>
-                        <th>Apellido</th>
-                        <th>Nombre de Usuario</th>
-                        <th>Bloqueado</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>`;
-
-            for (let usuarioBloqueado of sistema.usuariosBloqueados) {
-
-                const { id, nombre, apellido, nombreUsuario, aprobado, bloqueado } = usuarioBloqueado;
-
-                tabla +=
-                    `<tr>
-                        <td><b>${id}</b></td>
-                        <td>${nombre}</td>
-                        <td>${apellido}</td>
-                        <td>${nombreUsuario}</td>
-                        <td><b>${bloqueado}</b></td>
-                        <td><input type="button" value="Desbloquear" id="btnDesbloquear" data-desbloquear="${id}"</td>
-                    </tr>`
-            }
-
-            tabla +=
-                `</body>
-                </table>`
-
-            document.querySelector('#tablaUsuariosBloqueados').innerHTML = tabla;
-
-        } else {
-
-            const h2 = `<h2 class="descripcion-pagina" style="color: red;">No hay Registros</h2>`;
-            document.querySelector('#tablaUsuariosBloqueados').innerHTML = h2;
-        }
-
-        this.accionDesbloquear();
-    }
-
     accionDesbloquear() {
 
         let btnDesbloquear = document.querySelectorAll('#btnDesbloquear');
@@ -1011,68 +737,8 @@ class Sistema {
             index++;
         }
 
-        sistema.tablaUsuariosBloqueados();
-        sistema.tablaUsuariosPendientes();
-    }
-
-    tablaModificarStock() {
-
-        const nombreUsuario = sistema.logueado.nombreUsuario;
-        const tipoUsuario = this.tipoUsuario(nombreUsuario);
-
-        if (sistema.maquina.length > 0) {
-
-            let tabla =
-                `<table>
-                <thead class="heading">
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Tipo de Instancia</th>
-                        <th>Stock</th>
-                        <th>Veces Alquilada</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>`;
-
-            for (let index = 0; index < this.maquinas.length; index++) {
-
-                let maquinas = this.maquinas[index];
-
-                if (tipoUsuario === 'administrador') {
-
-                    const { idMaquina, nombre, tipo, stock } = maquinas;
-
-                    const vecesAqluilada = sistema.vecesAlquilada(idMaquina);
-
-                    tabla +=
-                        `<tr>
-                        <td>${nombre}</td>
-                        <td>${tipo}</td>
-                        <td><b>${stock}</b></td>
-                        <td><b>${vecesAqluilada}</b></td>
-                        <td>
-                            <input type"text" id="txt${idMaquina}" class="txtModificarStock" placeholder="Ingrese un valor">
-                            <input type="button" value="Modificar Stock" id="btnModificarStock" data-maquina="${idMaquina}">
-                        </td>
-                    </tr>`
-
-                }
-            }
-
-            tabla +=
-                `</body>
-                </table>`
-
-            document.querySelector('#tablaModificarStock').innerHTML = tabla;
-
-            this.accionModificarStock();
-
-        } else {
-
-            const h2 = `<h2 class="descripcion-pagina" style="color: red;">No hay Registros</h2>`;
-            document.querySelector('#tablaModificarStock').innerHTML = h2;
-        }
+        ui.tablaUsuariosBloqueados();
+        ui.tablaUsuariosPendientes();
     }
 
     accionModificarStock() {
@@ -1120,8 +786,8 @@ class Sistema {
 
         }
 
-        sistema.tablaModificarStock();
-        sistema.tablaInformeMaquinas();
+        ui.tablaModificarStock();
+        ui.tablaInformeMaquinas();
     }
 
     vecesAlquilada(idMaquina) {
@@ -1140,72 +806,6 @@ class Sistema {
         }
 
         return vecesAqluilada;
-    }
-
-    tablaInformeMaquinas() {
-
-        const nombreUsuario = sistema.logueado.nombreUsuario;
-        const tipoUsuario = this.tipoUsuario(nombreUsuario);
-
-        if (sistema.maquina.length > 0) {
-
-            let tabla =
-                `<table>
-                <thead class="heading">
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Tipo de Instancia</th>
-                        <th>Costo Alquiler</th>
-                        <th>Costo por Encendido</th>
-                        <th>Total Veces Encendidas</th>
-                        <th>Total veces Alquilada</th>
-                        <th>Stock</th>
-                        <th>Ingreso Total</th>
-                    </tr>
-                </thead>
-                <tbody>`;
-
-            for (let index = 0; index < this.maquinas.length; index++) {
-
-                let maquina = this.maquinas[index];
-
-                if (tipoUsuario === 'administrador') {
-
-                    const { idMaquina, nombre, tipo, costoAlquiler, costoEncendido, stock } = maquina;
-
-                    const vecesAqluilada = sistema.vecesAlquilada(idMaquina);
-                    const vecesIniciada = sistema.vecesIniciada(idMaquina);
-                    const ingresoTotal = sistema.ingresoTotal(idMaquina);
-                    
-
-                    tabla +=
-                        `<tr>
-                        <td>${nombre}</td>
-                        <td>${tipo}</td>
-                        <td><b>${costoAlquiler}</b></td>
-                        <td><b>${costoEncendido}</b></td>
-                        <td><b>${vecesIniciada}</b></td>
-                        <td><b>${vecesAqluilada}</b></td>
-                        <td><b>${stock}</b></td>
-                        <td><b>${ingresoTotal}</b></td>
-                    </tr>`;
-
-                }
-            }
-
-            tabla +=
-                `</body>
-                </table>`;
-
-            document.querySelector('#tablaInformeMaquinas').innerHTML = tabla;
-
-            this.accionModificarStock();
-
-        } else {
-
-            const h2 = `<h2 class="descripcion-pagina" style="color: red;">No hay Registros</h2>`;
-            document.querySelector('#tablaInformeMaquinas').innerHTML = h2;
-        }
     }
 
     vecesIniciada(idMaquina) {
@@ -1238,7 +838,44 @@ class Sistema {
 
             }
         }
-        
+
         return ingresoTotal;
+    }
+
+    agregarAlquiler(object) {
+
+        let maquinaAlquilada = null;
+        let index = 0;
+
+        while (index < sistema.maquinas.length) {
+
+            let maquina = sistema.maquinas[index];
+
+            if (object.idMaquina === maquina.idMaquina) {
+
+                maquinaAlquilada = maquina;
+            }
+
+            index++;
+        }
+
+        if (maquinaAlquilada !== null) {
+
+            let { idMaquina, nombre, tipo, costoAlquiler, costoEncendido, estado, stock, iniciada } = maquinaAlquilada;
+            // const idUsuario = this.logueado.id; // Cuando se pre cargan los alquileres no existe usuario logueado. not defined.
+
+            if (stock > 0) {
+
+                /** Restar stock y actualizar propiedad */
+                let stockReal = stock - 1;
+                maquinaAlquilada.stock = stockReal;
+
+                /**Instanciar objeto Alquiler. Pasar datos al constructor */
+                const alquiler = new Alquiler(object.idUsuario, idMaquina, nombre, tipo, estado, iniciada, costoAlquiler, costoEncendido, stockReal);
+
+                // this.maquinasAlquiladas = [...this.maquinasAlquiladas, alquilada];
+                this.maquinasAlquiladas.push(alquiler);
+            }
+        }
     }
 }

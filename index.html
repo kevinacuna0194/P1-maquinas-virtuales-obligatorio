@@ -27,7 +27,7 @@
             <ul id="navPrincipal">
 
                 <li>
-                    <a class="enlaceNavegacion usuario administrador" data-id="Login" id="enlaceLogin">Login</a>
+                    <a class="enlaceNavegacion" data-id="Login" id="enlaceLogin">Login</a>
                 </li>
 
                 <li>
@@ -62,6 +62,10 @@
                     <a class="enlaceNavegacion administrador" data-id="InformeMaquinas">Informe de máquinas virtuales</a>
                 </li>
 
+                <li>
+                    <a class="enlaceNavegacion usuario administrador" data-id="Login" id="cerrarSesion" onclick="cerrarSesion()">Cerrar Sesión</a>
+                </li>
+
             </ul> <!--? ul #navPrincipal -->
         </div> <!--? #cabezal -->
 
@@ -91,12 +95,12 @@
 
                     <div class="campo">
                         <label for="nombreUsuarioLogin">Nombre de Usuario:</label>
-                        <input type="text" id="nombreUsuarioLogin" placeholder="Ingrese el nombre de usuario">
+                        <input type="text" id="nombreUsuarioLogin" placeholder="Ingrese el nombre de usuario" value="kevin">
                     </div> <!--? campo -->
 
                     <div class="campo">
                         <label for="passwordLogin">Password:</label>
-                        <input type="text" id="passwordLogin" placeholder="Ingrese su password">
+                        <input type="text" id="passwordLogin" placeholder="Ingrese su password" value="Kevin01">
                     </div> <!--? campo -->
 
                     <div>
