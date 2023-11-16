@@ -593,3 +593,10 @@ div #bienvenido .spanBienvenido {
     padding: 0.5rem;
     width: 100%;
 }
+
+p#totalIngreso {
+
+    text-align: center;
+    font-size: 3rem;
+    font-weight: var(--bold);
+}

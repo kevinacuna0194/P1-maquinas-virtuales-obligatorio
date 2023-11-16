@@ -11,19 +11,19 @@ class UI {
         } else {
             parrafo.classList.add('exito');
         }
-        
+
         document.querySelector(`#${idDiv}`).appendChild(parrafo);
-        
+
         setTimeout(() => {
             parrafo.remove();
         }, 2000);
     }
 
     static limpiarHTML() {
-        
+
         const nodeList = document.querySelectorAll('.resultado');
 
-        for(let div of nodeList) {
+        for (let div of nodeList) {
 
             while (div.firstChild) {
                 div.removeChild(div.firstChild);
@@ -35,7 +35,7 @@ class UI {
 
         const div = document.querySelector('#bienvenido');
 
-        while(div.firstChild) {
+        while (div.firstChild) {
             div.removeChild(div.firstChild);
         }
     }
@@ -44,7 +44,7 @@ class UI {
 
         const div = document.querySelector('#resultadoListadoUsuariosAprobados');
 
-        while(div.firstChild) {
+        while (div.firstChild) {
             div.removeChild(div.firstChild);
         }
     }
@@ -386,6 +386,7 @@ class UI {
 
         const nombreUsuario = sistema.logueado.nombreUsuario;
         const tipoUsuario = sistema.tipoUsuario(nombreUsuario);
+        let ingresoTotal = 0;
 
         if (sistema.maquina.length > 0) {
 
@@ -415,8 +416,7 @@ class UI {
 
                     const vecesAqluilada = sistema.vecesAlquilada(idMaquina);
                     const vecesIniciada = sistema.vecesIniciada(idMaquina);
-                    const ingresoTotal = sistema.ingresoTotal(idMaquina);
-                    
+                    const total = sistema.total(idMaquina);
 
                     tabla +=
                         `<tr>
@@ -427,10 +427,13 @@ class UI {
                         <td><b>${vecesIniciada}</b></td>
                         <td><b>${vecesAqluilada}</b></td>
                         <td><b>${stock}</b></td>
-                        <td><b>${ingresoTotal}</b></td>
+                        <td><b>${total}</b></td>
                     </tr>`;
 
+                    ingresoTotal += total;
+                    console.log(ingresoTotal);
                 }
+
             }
 
             tabla +=
@@ -438,6 +441,7 @@ class UI {
                 </table>`;
 
             document.querySelector('#tablaInformeMaquinas').innerHTML = tabla;
+            document.querySelector('#totalIngreso').innerHTML = ingresoTotal;
 
             sistema.accionModificarStock();
 
@@ -446,5 +450,17 @@ class UI {
             const h2 = `<h2 class="descripcion-pagina" style="color: red;">No hay Registros</h2>`;
             document.querySelector('#tablaInformeMaquinas').innerHTML = h2;
         }
+    }
+
+    selectFiltroMaquinasAlquiladas() {
+
+        let select = `
+            <select id="filtroMaquinasAlquiladas">
+                <option value="">--Seleccione--</option>
+                <option value="on">ON</option>
+                <option value="off">OFF</option> 
+            </select>`;
+
+        document.querySelector('#selectFiltroMaquinasAlquiladas').innerHTML = select;
     }
 }

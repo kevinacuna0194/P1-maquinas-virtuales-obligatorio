@@ -59,11 +59,13 @@
                 </li>
 
                 <li>
-                    <a class="enlaceNavegacion administrador" data-id="InformeMaquinas">Informe de máquinas virtuales</a>
+                    <a class="enlaceNavegacion administrador" data-id="InformeMaquinas">Informe de máquinas
+                        virtuales</a>
                 </li>
 
                 <li>
-                    <a class="enlaceNavegacion usuario administrador" data-id="Login" id="cerrarSesion" onclick="cerrarSesion()">Cerrar Sesión</a>
+                    <a class="enlaceNavegacion usuario administrador" data-id="Login" id="cerrarSesion">Cerrar
+                        Sesión</a>
                 </li>
 
             </ul> <!--? ul #navPrincipal -->
@@ -95,12 +97,13 @@
 
                     <div class="campo">
                         <label for="nombreUsuarioLogin">Nombre de Usuario:</label>
-                        <input type="text" id="nombreUsuarioLogin" placeholder="Ingrese el nombre de usuario" value="kevin">
+                        <input type="text" id="nombreUsuarioLogin" placeholder="Ingrese el nombre de usuario"
+                            value="admin1">
                     </div> <!--? campo -->
 
                     <div class="campo">
                         <label for="passwordLogin">Password:</label>
-                        <input type="text" id="passwordLogin" placeholder="Ingrese su password" value="Kevin01">
+                        <input type="text" id="passwordLogin" placeholder="Ingrese su password" value="Admin1">
                     </div> <!--? campo -->
 
                     <div>
@@ -110,7 +113,7 @@
                     <div class="acciones">
                         <ul>
                             <li>
-                                <a class="enlaceNavegacion" data-id="Registrarse">¿No tienes una cuenta?
+                                <a class="enlaceNavegacion usuario" data-id="Registrarse">¿No tienes una cuenta?
                                     Registrate</a>
                             </li>
                         </ul>
@@ -160,7 +163,7 @@
 
                     <div class="campo">
                         <label for="cvc">CVC (código de verificación):</label>
-                        <input type="text" id="cvc" placeholder="formato numérico de 3 dígitos" value="223">
+                        <input type="text" id="cvc" placeholder="formato numérico de 3 dígitos">
                     </div> <!--? campo -->
 
                     <div>
@@ -170,7 +173,8 @@
                     <div class="acciones">
                         <ul>
                             <li>
-                                <a class="enlaceNavegacion" data-id="Login">¿Ya tienes una cuenta? Inicia Sesión</a>
+                                <a class="enlaceNavegacion auxiliar" data-id="Login">¿Ya tienes una cuenta? Inicia
+                                    Sesión</a>
                             </li>
                         </ul>
                     </div> <!--? acciones -->
@@ -276,7 +280,12 @@
                 <h2 class="descripcion-pagina" style="color: red;">No hay Registros</h2>
             </div>
 
-        </div> <!--? Modificar Stock -->
+            <h2 class="nombre-pagina">total de ingreso (suma de todos los
+                ingresos)</h2>
+            
+            <p id="totalIngreso"></p>
+
+        </div> <!--? Informes de máquinas -->
 
         <footer id="footer">
             <a href="https://github.com/kevinacuna0194/P1-Obligatorio11-2023.git" target="_blank">

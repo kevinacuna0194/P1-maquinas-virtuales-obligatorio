@@ -823,7 +823,7 @@ class Sistema {
         return vecesIniciada;
     }
 
-    ingresoTotal(idMaquina) {
+    total(idMaquina) {
 
         let ingresoTotal = 0;
 

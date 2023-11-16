@@ -80,11 +80,10 @@ function login() {
                     cerrarSesion();
 
                 }, 1000);
-
             }
         }
     }
-}
+} /** Función Login */
 
 function registrarse() {
 
@@ -134,7 +133,7 @@ function registrarse() {
             }
         }
     }
-}
+} /** Función Registrarse */
 
 function alquilar() {
 
@@ -144,7 +143,7 @@ function alquilar() {
 
         sistema.alquilar(machine);
     }
-}
+} /** Función Alquilar */
 
 
 
