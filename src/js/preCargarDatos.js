@@ -26,7 +26,7 @@ function preCargarDatosMaquina() {
         tipo: 'Optimizadas para computo',
         costoAlquiler: 20,
         costoEncendido: 2.5,
-        stock: 5,
+        stock: 5
     }
 
     const maquinaComputo2 = {
@@ -34,7 +34,7 @@ function preCargarDatosMaquina() {
         tipo: 'Optimizadas para computo',
         costoAlquiler: 30,
         costoEncendido: 3.5,
-        stock: 5,
+        stock: 5
     }
 
     const maquinaComputo3 = {
@@ -42,7 +42,7 @@ function preCargarDatosMaquina() {
         tipo: 'Optimizadas para computo',
         costoAlquiler: 50,
         costoEncendido: 6,
-        stock: 5,
+        stock: 5
     }
 
     const maquinaMemoria1 = {
@@ -50,7 +50,7 @@ function preCargarDatosMaquina() {
         tipo: 'Optimizadas para memoria',
         costoAlquiler: 35,
         costoEncendido: 4,
-        stock: 5,
+        stock: 5
     }
 
     const maquinaMemoria2 = {
@@ -58,7 +58,7 @@ function preCargarDatosMaquina() {
         tipo: 'Optimizadas para memoria',
         costoAlquiler: 50,
         costoEncendido: 6.5,
-        stock: 5,
+        stock: 5
     }
 
     const maquinaMemoria3 = {
@@ -66,7 +66,7 @@ function preCargarDatosMaquina() {
         tipo: 'Optimizadas para memoria',
         costoAlquiler: 60,
         costoEncendido: 7,
-        stock: 5,
+        stock: 5
     }
 
     const maquinaAlmacenamiento1 = {
@@ -74,7 +74,7 @@ function preCargarDatosMaquina() {
         tipo: 'Optimizadas para almacenamiento',
         costoAlquiler: 30,
         costoEncendido: 3.5,
-        stock: 5,
+        stock: 5
     }
 
     const maquinaAlmacenamiento2 = {
@@ -82,7 +82,7 @@ function preCargarDatosMaquina() {
         tipo: 'Optimizadas para almacenamiento:',
         costoAlquiler: 50,
         costoEncendido: 6.5,
-        stock: 5,
+        stock: 5
     }
 
     sistema.agregarMaquina(maquinaComputo1);
@@ -96,8 +96,6 @@ function preCargarDatosMaquina() {
 }
 
 function preCargarAdministrador() {
-
-
 
     const administrador1 = {
         nombre: 'administrador1',
@@ -117,9 +115,23 @@ function preCargarAdministrador() {
         password: 'Admin3'
     }
 
+    const administrador4 = {
+        nombre: 'administrador4',
+        nombreUsuario: 'admin4',
+        password: 'Admin4'
+    }
+
+    const administrador5 = {
+        nombre: 'administrador5',
+        nombreUsuario: 'admin5',
+        password: 'Admin5'
+    }
+
     sistema.agregarAdministrador(administrador1);
     sistema.agregarAdministrador(administrador2);
     sistema.agregarAdministrador(administrador3);
+    sistema.agregarAdministrador(administrador4);
+    sistema.agregarAdministrador(administrador5);
 }
 
 function preCargarUsuariosPendientes() {

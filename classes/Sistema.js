@@ -45,7 +45,7 @@ class Sistema {
                 cantidadEspacio++;
             }
 
-            index++;
+            // index++;
         }
 
         if (caracter) {
